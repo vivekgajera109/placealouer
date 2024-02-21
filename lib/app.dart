@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:placealouer/view/splash_screen/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
@@ -6,7 +7,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Placealouer',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
