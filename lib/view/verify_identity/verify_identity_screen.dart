@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:placealouer/common/widget/common_%20button.dart';
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
-import 'package:placealouer/view/splash_screen/splash_screen.dart';
+import 'package:placealouer/view/main_home/main_home.dart';
+import 'package:placealouer/common/background/common_background.dart';
 
 class VerifyIdentity extends StatefulWidget {
   const VerifyIdentity({super.key});
@@ -41,24 +44,13 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
                 )
               ],
             ),
-            GestureDetector(
-              child: Container(
-                height: 42,
-                width: 232,
-                margin: const EdgeInsetsDirectional.only(bottom: 40),
-                decoration: BoxDecoration(
-                  border: Border.all(),
-                  color: appWhiteColor,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Center(
-                  child: Text(
-                    "Continuer",
-                    style: AppTextStyle.regularBold25
-                        .copyWith(color: appBlackColor),
-                  ),
-                ),
-              ),
+            CommonButton(
+              title: "Continuer",
+              onTap: () {
+                Get.to(
+                  () => const MainHome(),
+                );
+              },
             ),
           ],
         ),

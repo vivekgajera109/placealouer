@@ -6,7 +6,7 @@ import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/controller/onboarding_controller/onboarding_controller.dart';
 import 'package:placealouer/model/onboarding_model.dart';
 import 'package:placealouer/view/onboarding_screen/slider.dart';
-import 'package:placealouer/view/splash_screen/splash_screen.dart';
+import 'package:placealouer/common/background/common_background.dart';
 import 'package:placealouer/view/verify_identity/verify_identity_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
