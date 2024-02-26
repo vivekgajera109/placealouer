@@ -57,50 +57,51 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
       ),
     );
   }
+}
 
-  GestureDetector commonCard({void Function()? onTap, String? title}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 140,
-        width: 140,
-        decoration: BoxDecoration(
-            color: appWhiteColor,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 8,
-                color: appBlackColor.withOpacity(0.2),
-                offset: const Offset(0, 5),
-              )
-            ]),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            height05,
-            Container(
-              height: 52,
-              width: 52,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(),
-              ),
-              child: const Icon(
-                Icons.add,
-                size: 30,
-              ),
+GestureDetector commonCard(
+    {void Function()? onTap, String? title, Color? color}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      height: 140,
+      width: 140,
+      decoration: BoxDecoration(
+          color: color ?? appWhiteColor,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 8,
+              color: appBlackColor.withOpacity(0.2),
+              offset: const Offset(0, 5),
+            )
+          ]),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          height05,
+          Container(
+            height: 52,
+            width: 52,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(),
             ),
-            Text(
-              title ?? "",
-              style: AppTextStyle.regularBold10
-                  .copyWith(color: appBlackColor, fontSize: 12),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            child: const Icon(
+              Icons.add,
+              size: 30,
             ),
-            height05
-          ],
-        ),
+          ),
+          Text(
+            title ?? "",
+            style: AppTextStyle.regularBold10
+                .copyWith(color: appBlackColor, fontSize: 12),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          height05
+        ],
       ),
-    );
-  }
+    ),
+  );
 }

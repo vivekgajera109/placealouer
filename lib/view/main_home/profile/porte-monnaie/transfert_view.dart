@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:placealouer/common/background/common_background.dart';
 import 'package:placealouer/common/text_widgets/input_text_field_widget.dart';
 import 'package:placealouer/common/widget/common_%20button.dart';
@@ -37,7 +38,10 @@ class TransfertScreen extends StatelessWidget {
           borderRaduis: 50,
         ),
         customHeight(50),
-        const CommonButton(
+        CommonButton(
+          onTap: () {
+            Get.back();
+          },
           title: "VALIDER",
           borderColor: buttonColor,
           buttonColor: buttonColor,

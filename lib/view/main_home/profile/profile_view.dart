@@ -8,6 +8,7 @@ import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
 import 'package:placealouer/view/inscription/cgu/cgu_view.dart';
 import 'package:placealouer/view/inscription/privacy_policy/privacy_policy.dart';
+import 'package:placealouer/view/main_home/profile/mes_annonces/mes_annonces_view.dart';
 import 'package:placealouer/view/main_home/profile/porte-monnaie/porte_monnaie_view.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -50,7 +51,13 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
           customHeight(30),
-          coutomCard(iconUrl: "assets/svg/map_pin.svg", title: "Mes annonces"),
+          coutomCard(
+            iconUrl: "assets/svg/map_pin.svg",
+            title: "Mes annonces",
+            onTap: () {
+              Get.to(() => const MesAnnoncesScreen());
+            },
+          ),
           coutomCard(
             iconUrl: "assets/svg/wallet-01.svg",
             title: "Porte-monnaie",
