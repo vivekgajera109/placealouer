@@ -36,6 +36,7 @@ class CommonBackgroundAuth extends StatelessWidget {
   final String appBarTitle;
   final String? footerTitle;
   final Widget child;
+  final Widget? childScial;
   final Widget? childFoter;
   final bool? isScial;
   final bool? isLeading;
@@ -50,8 +51,9 @@ class CommonBackgroundAuth extends StatelessWidget {
       this.isLeading = true,
       this.isFooter = true,
       this.footerTitle,
+      this.childFoter,
       this.color,
-      this.childFoter});
+      this.childScial});
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +125,7 @@ class CommonBackgroundAuth extends StatelessWidget {
                     ),
                     isScial ?? false
                         ? socialLoginView()
-                        : childFoter ?? const SizedBox(),
+                        : childScial ?? const SizedBox(),
                   ],
                 ),
               ),
@@ -137,7 +139,7 @@ class CommonBackgroundAuth extends StatelessWidget {
                       decorationColor: appWhiteColor,
                     ),
                   )
-                : const SizedBox(),
+                : childFoter ?? SizedBox(),
             isFooter ?? true ? height20 : const SizedBox(),
           ],
         ),

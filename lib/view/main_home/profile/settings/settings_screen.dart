@@ -24,7 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       color: containerColor,
       isFooter: true,
       appBarTitle: "Autres réglages",
-      childFoter: CommonButton(
+      childScial: CommonButton(
         title: "Continuer",
         margin: const EdgeInsets.only(bottom: 10),
         onTap: () {

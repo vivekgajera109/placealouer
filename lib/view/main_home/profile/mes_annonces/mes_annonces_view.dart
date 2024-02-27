@@ -177,7 +177,7 @@ class _MesAnnoncesScreenState extends State<MesAnnoncesScreen> {
                             alignment: Alignment.center,
                             child: CommonButton(
                               onTap: () {
-                                Get.to(() => PublierUneAnnonce());
+                                Get.to(() => const PublierUneAnnonce());
                               },
                               margin: EdgeInsets.zero,
                               style: AppTextStyle.regularBold15,
