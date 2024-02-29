@@ -3,7 +3,11 @@ import 'package:get/get.dart';
 
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/controller/main_home_controller/main_home_controller.dart';
+import 'package:placealouer/view/main_home/message/message_screen.dart';
 import 'package:placealouer/view/main_home/profile/profile_view.dart';
+import 'package:placealouer/view/main_home/profile/publier/publier_screen.dart';
+import 'package:placealouer/view/main_home/reservations/reservations_screen.dart';
+import 'package:placealouer/view/main_home/search_view/map/map_screen.dart';
 
 import 'search_view/search_view.dart';
 
@@ -23,16 +27,11 @@ class _MainHomeState extends State<MainHome> {
   }
 
   List<Widget> widgetOptions = <Widget>[
-    const SearchView(),
-    const Text(
-      'Index 1: Business',
-    ),
-    const Text(
-      'Index 2: School',
-    ),
-    const Text(
-      'Index 3: School',
-    ),
+    // const SearchView(),
+    const GoogleMapScreen(),
+    const PublierScreen(),
+    const ReservationsScreen(),
+    const MessageScreen(),
     const ProfileScreen()
   ];
   @override

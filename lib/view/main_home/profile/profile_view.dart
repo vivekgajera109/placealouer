@@ -8,6 +8,7 @@ import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
 import 'package:placealouer/view/inscription/cgu/cgu_view.dart';
 import 'package:placealouer/view/inscription/privacy_policy/privacy_policy.dart';
+import 'package:placealouer/view/main_home/message/chat/chat_screen.dart';
 import 'package:placealouer/view/main_home/profile/mes_annonces/mes_annonces_view.dart';
 import 'package:placealouer/view/main_home/profile/porte-monnaie/porte_monnaie_view.dart';
 
@@ -25,7 +26,11 @@ class ProfileScreen extends StatelessWidget {
         children: [
           Row(
             children: [
-              const CircleAvatar(radius: 45),
+              const CircleAvatar(
+                radius: 45,
+                backgroundColor: Colors.transparent,
+                backgroundImage: AssetImage("assets/png/pdp 1.png"),
+              ),
               width15,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +71,15 @@ class ProfileScreen extends StatelessWidget {
             },
           ),
           coutomCard(
-              iconUrl: "assets/svg/help-circle-contained.svg", title: "Aide"),
+              onTap: () {
+                Get.to(
+                  () => const ChatScreen(
+                    isAide: true,
+                  ),
+                );
+              },
+              iconUrl: "assets/svg/help-circle-contained.svg",
+              title: "Aide"),
           GestureDetector(
             onTap: () {
               Get.to(() => const PrivacyPolicy());

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const Color appWhiteColor = Color(0xFFFFFFFF);
 const Color appBlackColor = Color(0XFF1E1E1E);
+const Color calendarColor = Color(0XFF282D35);
 const Color borderColor = Color(0XFFE8ECF4);
 const Color hintTextColor = Color(0XFFC2C2C2);
 const Color textFormFieldColor = Color(0XFFCECECE);

@@ -13,6 +13,7 @@ class CommonButton extends StatelessWidget {
   final String title;
   final TextStyle? style;
   final double? height;
+  final double? width;
   final EdgeInsetsGeometry? margin;
   const CommonButton(
       {super.key,
@@ -21,6 +22,7 @@ class CommonButton extends StatelessWidget {
       required this.title,
       this.borderColor,
       this.height,
+      this.width,
       this.margin,
       this.style,
       this.titleColor});
@@ -31,7 +33,7 @@ class CommonButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: height ?? 42,
-        width: 232,
+        width: width ?? 232,
         margin: margin ?? const EdgeInsetsDirectional.only(bottom: 40),
         decoration: BoxDecoration(
           border: Border.all(color: borderColor ?? appBlackColor),
