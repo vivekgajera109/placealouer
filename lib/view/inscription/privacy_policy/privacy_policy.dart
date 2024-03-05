@@ -12,15 +12,14 @@ class PrivacyPolicy extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leadingWidth: 30,
-        centerTitle: false,
+        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Get.back();
           },
           icon: const Icon(
             Icons.arrow_back_ios,
-            size: 30,
+            size: 25,
             color: appBlackColor,
           ),
         ),
@@ -29,8 +28,9 @@ class PrivacyPolicy extends StatelessWidget {
           maxLines: 2,
           style: AppTextStyle.normalRegularBold20.copyWith(
             color: appBlackColor,
+            fontSize: 18,
           ),
-          textAlign: TextAlign.center,
+          // textAlign: TextAlign.center,
         ),
       ),
       body: ListView(

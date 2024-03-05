@@ -46,23 +46,26 @@ class PublierScreen extends StatelessWidget {
                   onTap: () {
                     Get.to(() => const PublierUneAnnonce());
                   },
-                  child: Card(
-                    color: containerColor,
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 35.0, horizontal: 60),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Mettre ma place en location\n",
-                            style: AppTextStyle.normalSemiBold20
-                                .copyWith(color: appBlackColor),
-                            textAlign: TextAlign.center,
-                            maxLines: 3,
-                          )
-                        ],
+                  child: SizedBox(
+                    height: 150,
+                    child: Card(
+                      color: containerColor,
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 35.0, horizontal: 60),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Mettre ma place en location",
+                              style: AppTextStyle.normalSemiBold20
+                                  .copyWith(color: appBlackColor),
+                              textAlign: TextAlign.center,
+                              maxLines: 3,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

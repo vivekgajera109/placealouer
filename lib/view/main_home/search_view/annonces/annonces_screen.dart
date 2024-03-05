@@ -85,6 +85,7 @@ class AnnoncesScreen extends StatelessWidget {
                 ),
               ],
             ),
+            height10,
             Expanded(
               child: ListView.builder(
                 itemCount: 10,
@@ -97,10 +98,10 @@ class AnnoncesScreen extends StatelessWidget {
                     },
                     child: Card(
                       elevation: 3,
-                      margin: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(15),
                       color: containerColor,
                       child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Column(
                             children: [
                               Row(
@@ -150,7 +151,7 @@ class AnnoncesScreen extends StatelessWidget {
                               Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     RatingBarIndicator(
                                       itemSize: 20,

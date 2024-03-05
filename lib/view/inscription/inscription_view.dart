@@ -9,14 +9,20 @@ import 'package:placealouer/view/inscription/connexion/connexion_view.dart';
 import 'package:placealouer/view/inscription/inscription_from_view.dart';
 import 'package:placealouer/common/background/common_background.dart';
 
-class InscriptionScreeen extends StatelessWidget {
+class InscriptionScreeen extends StatefulWidget {
   const InscriptionScreeen({super.key});
 
+  @override
+  State<InscriptionScreeen> createState() => _InscriptionScreeenState();
+}
+
+class _InscriptionScreeenState extends State<InscriptionScreeen> {
+  @override
   @override
   Widget build(BuildContext context) {
     return CommonBackground(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

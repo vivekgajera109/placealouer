@@ -9,14 +9,22 @@ import 'package:placealouer/view/inscription/reinitialization/reinitialization_v
 import 'package:placealouer/view/onboarding_screen/onboarding_screen.dart';
 import 'package:placealouer/common/background/common_background.dart';
 
-class ConnexionScreen extends StatelessWidget {
+class ConnexionScreen extends StatefulWidget {
   const ConnexionScreen({super.key});
+
+  @override
+  State<ConnexionScreen> createState() => _ConnexionScreenState();
+}
+
+class _ConnexionScreenState extends State<ConnexionScreen> {
+  bool passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
     return CommonBackgroundAuth(
       footerTitle: "Mentions légales",
       isScial: true,
+      isFooter: true,
       appBarTitle: "CONNEXION",
       child: Column(
         children: [
@@ -41,8 +49,22 @@ class ConnexionScreen extends StatelessWidget {
                 .copyWith(color: appBlackColor),
             borderRaduis: 50,
           ),
-          height20,
+          height15,
           textFormField(
+            maxLines: 1,
+            suffixIcon: IconButton(
+              icon: Icon(
+                  passwordVisible ? Icons.visibility : Icons.visibility_off),
+              onPressed: () {
+                setState(
+                  () {
+                    passwordVisible = !passwordVisible;
+                  },
+                );
+              },
+            ),
+            obscureText: passwordVisible,
+            keyboardType: TextInputType.visiblePassword,
             contentPadding: const EdgeInsets.all(12),
             filledColor: textFormFieldColor,
             hintText: "Mot de passe",
@@ -77,7 +99,7 @@ class ConnexionScreen extends StatelessWidget {
             buttonColor: buttonColor,
             borderColor: buttonColor,
             titleColor: appWhiteColor,
-            margin: const EdgeInsets.only(bottom: 20),
+            margin: const EdgeInsets.only(bottom: 10),
             onTap: () {
               Get.to(() => const OnboardingScreen());
             },

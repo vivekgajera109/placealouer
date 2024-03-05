@@ -27,7 +27,7 @@ class ProfileScreen extends StatelessWidget {
           Row(
             children: [
               const CircleAvatar(
-                radius: 45,
+                radius: 40,
                 backgroundColor: Colors.transparent,
                 backgroundImage: AssetImage("assets/png/pdp 1.png"),
               ),
@@ -80,6 +80,7 @@ class ProfileScreen extends StatelessWidget {
               },
               iconUrl: "assets/svg/help-circle-contained.svg",
               title: "Aide"),
+          height10,
           GestureDetector(
             onTap: () {
               Get.to(() => const PrivacyPolicy());
@@ -127,7 +128,7 @@ class ProfileScreen extends StatelessWidget {
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 26.0),
+            padding: const EdgeInsets.symmetric(vertical: 25.0),
             child: Column(
               children: [
                 SvgPicture.asset(

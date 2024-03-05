@@ -18,6 +18,7 @@ class InscriptionFormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonBackgroundAuth(
       isScial: true,
+      isFooter: false,
       appBarTitle: "INSCRIPTION",
       child: Column(
         children: [
@@ -42,7 +43,7 @@ class InscriptionFormScreen extends StatelessWidget {
                 .copyWith(color: appBlackColor),
             borderRaduis: 50,
           ),
-          height20,
+          height15,
           textFormField(
             contentPadding: const EdgeInsets.all(12),
             filledColor: textFormFieldColor,
@@ -56,7 +57,7 @@ class InscriptionFormScreen extends StatelessWidget {
                 .copyWith(color: appBlackColor),
             borderRaduis: 50,
           ),
-          height20,
+          height15,
           textFormField(
             contentPadding: const EdgeInsets.all(12),
             filledColor: textFormFieldColor,
@@ -70,7 +71,7 @@ class InscriptionFormScreen extends StatelessWidget {
                 .copyWith(color: appBlackColor),
             borderRaduis: 50,
           ),
-          height20,
+          height15,
           textFormField(
             contentPadding: const EdgeInsets.all(12),
             filledColor: textFormFieldColor,
@@ -84,7 +85,7 @@ class InscriptionFormScreen extends StatelessWidget {
                 .copyWith(color: appBlackColor),
             borderRaduis: 50,
           ),
-          height20,
+          height15,
           textFormField(
             contentPadding: const EdgeInsets.all(12),
             filledColor: textFormFieldColor,
@@ -157,9 +158,11 @@ class InscriptionFormScreen extends StatelessWidget {
             buttonColor: buttonColor,
             borderColor: buttonColor,
             titleColor: appWhiteColor,
-            margin: const EdgeInsets.only(bottom: 20),
+            margin: const EdgeInsets.only(bottom: 10),
             onTap: () {
-              Get.to(() => const OnboardingScreen());
+              Get.to(
+                () => const OnboardingScreen(),
+              );
             },
           ),
         ],

@@ -35,7 +35,7 @@ class PublierUneAnnonce extends StatelessWidget {
                 Expanded(
                   child: Text(
                     "Publier une annonce",
-                    style: AppTextStyle.regularBold30,
+                    style: AppTextStyle.regularBold30.copyWith(fontSize: 22),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,

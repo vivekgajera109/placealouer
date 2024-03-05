@@ -39,7 +39,7 @@ class ReReinitializationScreen extends StatelessWidget {
                 .copyWith(color: appBlackColor),
             borderRaduis: 50,
           ),
-          height20,
+          height15,
           textFormField(
             contentPadding: const EdgeInsets.all(12),
             filledColor: textFormFieldColor,

@@ -21,18 +21,24 @@ class CustomSlider extends StatelessWidget {
       children: [
         Image(image: AssetImage(image)),
         height20,
-        Text(
-          title,
-          style: AppTextStyle.regularBold25.copyWith(fontSize: 27),
-          textAlign: TextAlign.center,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Text(
+            title,
+            style: AppTextStyle.regularBold25.copyWith(fontSize: 25),
+            textAlign: TextAlign.center,
+          ),
         ),
         height20,
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Text(
-            subTitle,
-            style: AppTextStyle.normalSemiBold15.copyWith(fontSize: 18),
-            textAlign: TextAlign.center,
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: Text(
+              subTitle,
+              style: AppTextStyle.normalSemiBold15.copyWith(fontSize: 17),
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ],

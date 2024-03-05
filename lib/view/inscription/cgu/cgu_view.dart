@@ -11,25 +11,22 @@ class CguScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leadingWidth: 30,
-        centerTitle: false,
+        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Get.back();
           },
           icon: const Icon(
             Icons.arrow_back_ios,
-            size: 30,
+            size: 25,
             color: appBlackColor,
           ),
         ),
         title: Text(
           "Conditions Générales d'Utilisation (CGU) - Placealouer par Arsenic",
           maxLines: 2,
-          style: AppTextStyle.normalRegularBold20.copyWith(
-            color: appBlackColor,
-          ),
-          textAlign: TextAlign.center,
+          style: AppTextStyle.normalRegularBold20
+              .copyWith(color: appBlackColor, fontSize: 18),
         ),
       ),
       body: ListView(

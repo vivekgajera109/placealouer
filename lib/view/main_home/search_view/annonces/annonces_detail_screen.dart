@@ -15,127 +15,129 @@ class AnnoncesDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          SizedBox(
-            height: 300,
-            width: Get.width,
-            child: Image.asset(
-              "assets/png/garage.png",
-              fit: BoxFit.cover,
+      body: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            SizedBox(
+              height: 300,
+              width: Get.width,
+              child: Image.asset(
+                "assets/png/garage.png",
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          height10,
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              "TITRE DE L’ANNONCE",
-              style: AppTextStyle.regularBold25.copyWith(color: appBlackColor),
+            height10,
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                "TITRE DE L’ANNONCE",
+                style:
+                    AppTextStyle.regularBold25.copyWith(color: appBlackColor),
+              ),
             ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10), color: containerColor),
-            padding: const EdgeInsets.all(10),
-            margin: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: containerColor),
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.all(15),
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const CircleAvatar(
+                            radius: 35,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: AssetImage("assets/png/pdp 1.png"),
+                          ),
+                          width15,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Léa Dupond",
+                                style: AppTextStyle.regularBold20
+                                    .copyWith(color: appBlackColor),
+                              ),
+                              RatingBarIndicator(
+                                itemSize: 20,
+                                itemCount: 5,
+                                rating: 2,
+                                itemBuilder: (context, index) {
+                                  return const Icon(
+                                    Icons.star_sharp,
+                                    color: Colors.amber,
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      CommonButton(
+                        title: "10€/Jours",
+                        style: AppTextStyle.regularBold15,
+                        height: 25,
+                        buttonColor: appBlackColor,
+                        width: 80,
+                        margin: EdgeInsets.zero,
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: Row(
                       children: [
-                        const CircleAvatar(
-                          radius: 40,
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: AssetImage("assets/png/pdp 1.png"),
+                        Image.asset(
+                          "assets/png/code_1.png",
+                          height: 40,
                         ),
-                        width15,
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Léa Dupond",
-                              style: AppTextStyle.regularBold20
-                                  .copyWith(color: appBlackColor),
-                            ),
-                            RatingBarIndicator(
-                              itemSize: 20,
-                              itemCount: 5,
-                              rating: 2,
-                              itemBuilder: (context, index) {
-                                return const Icon(
-                                  Icons.star_sharp,
-                                  color: Colors.amber,
-                                );
-                              },
-                            ),
-                          ],
-                        ),
+                        width10,
+                        Expanded(
+                          child: Text(
+                            "L’accès à la location s’effectue avec un code.",
+                            style: AppTextStyle.regularBold15
+                                .copyWith(color: appBlackColor),
+                          ),
+                        )
                       ],
                     ),
-                    CommonButton(
-                      title: "10€/Jours",
-                      style: AppTextStyle.regularBold15,
-                      height: 25,
-                      buttonColor: appBlackColor,
-                      width: 80,
-                      margin: EdgeInsets.zero,
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        "assets/png/code_1.png",
-                        height: 40,
-                      ),
-                      width10,
-                      Expanded(
-                        child: Text(
-                          "L’accès à la location s’effectue avec un code.",
-                          style: AppTextStyle.regularBold15
-                              .copyWith(color: appBlackColor),
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                    ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        "assets/svg/alarm.svg",
-                        height: 32,
-                      ),
-                      width10,
-                      Expanded(
-                        child: Text(
-                          "Envoie automatique du code, le propriétaire valide immédiatement la réservation",
-                          style: AppTextStyle.regularBold15
-                              .copyWith(color: appBlackColor),
-                          textAlign: TextAlign.center,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          "assets/svg/alarm.svg",
+                          height: 32,
                         ),
-                      )
-                    ],
+                        width10,
+                        Expanded(
+                          child: Text(
+                            "Envoie automatique du code, le propriétaire valide immédiatement la réservation",
+                            style: AppTextStyle.regularBold15
+                                .copyWith(color: appBlackColor),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Text(
-                  "Description de l’annonce faite par le propriétaire Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
-                  style:
-                      AppTextStyle.regularBold15.copyWith(color: appBlackColor),
-                  textAlign: TextAlign.start,
-                )
-              ],
-            ),
-          )
-        ],
+                  Text(
+                    "Description de l’annonce faite par le propriétaire Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore",
+                    style: AppTextStyle.regularBold15
+                        .copyWith(color: appBlackColor),
+                    textAlign: TextAlign.start,
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(boxShadow: [

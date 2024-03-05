@@ -363,7 +363,8 @@ class GoogleMapScreen extends StatelessWidget {
               color: containerColor,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
               child: TextFormField(
                 decoration: InputDecoration(
                   prefixIcon: Icon(
@@ -388,7 +389,7 @@ class GoogleMapScreen extends StatelessWidget {
               right: 10,
               bottom: 10,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40.0),
+                padding: const EdgeInsets.symmetric(horizontal: 40.0),
                 child: CommonButton(
                   onTap: () {
                     Get.to(() => const AnnoncesScreen());
@@ -397,7 +398,7 @@ class GoogleMapScreen extends StatelessWidget {
                   buttonColor: buttonColor,
                   borderColor: buttonColor,
                   titleColor: appWhiteColor,
-                  margin: EdgeInsets.only(bottom: 20),
+                  margin: const EdgeInsets.only(bottom: 20),
                 ),
               ),
             ),

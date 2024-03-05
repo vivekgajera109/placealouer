@@ -23,7 +23,8 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(
+      resizeToAvoidBottomInset: false,
+      appBar: commonPreferredSize(
         title: widget.isAide == true
             ? Text(
                 "Aide",

@@ -26,7 +26,7 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
               children: [
                 Text(
                   "Vérifier votre identité",
-                  style: AppTextStyle.regularBold30.copyWith(fontSize: 27),
+                  style: AppTextStyle.regularBold30.copyWith(fontSize: 22),
                 ),
                 customHeight(50),
                 Row(
@@ -66,6 +66,7 @@ GestureDetector commonCard(
     child: Container(
       height: 140,
       width: 140,
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           color: color ?? appWhiteColor,
           borderRadius: BorderRadius.circular(20),

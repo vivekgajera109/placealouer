@@ -42,7 +42,6 @@ class InformationScreen extends StatelessWidget {
                           "L’accès à la location s’effectue avec un code.",
                           style: AppTextStyle.regularBold15
                               .copyWith(color: appBlackColor),
-                          textAlign: TextAlign.center,
                         ),
                       )
                     ],
@@ -62,7 +61,6 @@ class InformationScreen extends StatelessWidget {
                           "L’accès à la location s’effectue avec des clés ou un badge.",
                           style: AppTextStyle.regularBold15
                               .copyWith(color: appBlackColor),
-                          textAlign: TextAlign.center,
                         ),
                       )
                     ],
@@ -82,7 +80,6 @@ class InformationScreen extends StatelessWidget {
                           "Envoie automatique du code, le propriétaire valide immédiatement la réservation",
                           style: AppTextStyle.regularBold15
                               .copyWith(color: appBlackColor),
-                          textAlign: TextAlign.center,
                         ),
                       )
                     ],
@@ -102,7 +99,6 @@ class InformationScreen extends StatelessWidget {
                           "Le propriétaire remet la clef en main propre",
                           style: AppTextStyle.regularBold15
                               .copyWith(color: appBlackColor),
-                          textAlign: TextAlign.center,
                         ),
                       )
                     ],

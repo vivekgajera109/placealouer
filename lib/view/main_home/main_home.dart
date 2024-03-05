@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/controller/main_home_controller/main_home_controller.dart';
 import 'package:placealouer/view/main_home/message/message_screen.dart';
 import 'package:placealouer/view/main_home/profile/profile_view.dart';
-import 'package:placealouer/view/main_home/profile/publier/publier_screen.dart';
+import 'package:placealouer/view/main_home/publier/publier_screen.dart';
 import 'package:placealouer/view/main_home/reservations/reservations_screen.dart';
 import 'package:placealouer/view/main_home/search_view/map/map_screen.dart';
-
-import 'search_view/search_view.dart';
 
 class MainHome extends StatefulWidget {
   const MainHome({super.key});

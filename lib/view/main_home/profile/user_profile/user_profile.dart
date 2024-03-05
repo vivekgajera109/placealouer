@@ -14,6 +14,7 @@ class UserProfile extends StatelessWidget {
     return CommonBackgroundAuth(
       color: containerColor,
       appBarTitle: "Avis",
+      isFooter: false,
       child: Column(
         children: [
           Row(

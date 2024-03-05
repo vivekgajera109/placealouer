@@ -56,7 +56,7 @@ class MessageScreen extends StatelessWidget {
                                 style: AppTextStyle.regularBold20
                                     .copyWith(color: appBlackColor),
                               ),
-                              customHeight(30),
+                              customHeight(20),
                               Text(
                                 "Début de l’interieur du messages...",
                                 style: AppTextStyle.regularBold15

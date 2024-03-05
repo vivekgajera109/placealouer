@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:placealouer/common/background/common_background.dart';
 import 'package:placealouer/common/text_widgets/input_text_field_widget.dart';
@@ -22,7 +23,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return CommonBackgroundAuth(
       color: containerColor,
-      isFooter: true,
+      isFooter: false,
       appBarTitle: "Autres réglages",
       childScial: CommonButton(
         title: "Continuer",
@@ -141,14 +142,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: Column(
                                 children: [
-                                  Image.asset(
-                                    "assets/png/code_1.png",
-                                    height: 45,
-                                  ),
+                                  SvgPicture.asset("assets/svg/code_1.svg",
+                                      height: 45,
+                                      color: settingsController.isCode.value
+                                          ? appWhiteColor
+                                          : appBlackColor),
                                   Text(
                                     "Code",
-                                    style: AppTextStyle.regularBold15
-                                        .copyWith(color: appBlackColor),
+                                    style: AppTextStyle.regularBold15.copyWith(
+                                        color: settingsController.isCode.value
+                                            ? appWhiteColor
+                                            : appBlackColor),
                                   )
                                 ],
                               ),
@@ -171,14 +175,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: Column(
                                 children: [
-                                  Image.asset(
-                                    "assets/png/Key_alt.png",
+                                  SvgPicture.asset(
+                                    "assets/svg/Key_alt.svg",
+                                    color: settingsController.isClefs.value
+                                        ? appWhiteColor
+                                        : appBlackColor,
                                     height: 45,
                                   ),
                                   Text(
                                     "Clefs / Badge",
-                                    style: AppTextStyle.regularBold15
-                                        .copyWith(color: appBlackColor),
+                                    style: AppTextStyle.regularBold15.copyWith(
+                                        color: settingsController.isClefs.value
+                                            ? appWhiteColor
+                                            : appBlackColor),
                                   )
                                 ],
                               ),
@@ -205,7 +214,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             );
           }),
-          height20,
         ],
       ),
     );

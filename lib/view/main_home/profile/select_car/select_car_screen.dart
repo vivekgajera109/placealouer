@@ -32,14 +32,14 @@ class _SelectCarScreenState extends State<SelectCarScreen> {
                   },
                   icon: const Icon(
                     Icons.arrow_back_ios,
-                    size: 30,
+                    size: 25,
                     color: appWhiteColor,
                   ),
                 ),
                 Expanded(
                   child: Text(
                     "Selectionnez la voiture correspondant à la taille de votre garage",
-                    style: AppTextStyle.regularBold25.copyWith(fontSize: 23),
+                    style: AppTextStyle.regularBold25.copyWith(fontSize: 22),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -52,7 +52,7 @@ class _SelectCarScreenState extends State<SelectCarScreen> {
                   },
                   icon: const Icon(
                     Icons.arrow_back_ios,
-                    size: 30,
+                    size: 25,
                     color: Colors.transparent,
                   ),
                 ),
@@ -74,14 +74,14 @@ class _SelectCarScreenState extends State<SelectCarScreen> {
                           horizontal: 45, vertical: 10),
                       decoration: BoxDecoration(
                         color: selectCarController.selectCar.value == index
-                            ? hintTextColor
-                            : appWhiteColor,
+                            ? appWhiteColor
+                            : hintTextColor,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
                         children: [
                           Image.asset(
-                            selectCarController.selectCar.value == index
+                            selectCarController.selectCar.value != index
                                 ? "${selectCarController.carList[index].selectedImage}"
                                 : "${selectCarController.carList[index].image}",
                           ),

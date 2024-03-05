@@ -12,7 +12,7 @@ class CommonBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Container(
         height: Get.height,
         width: Get.width,
@@ -71,7 +71,7 @@ class CommonBackgroundAuth extends StatelessWidget {
                         },
                         icon: const Icon(
                           Icons.arrow_back_ios,
-                          size: 30,
+                          size: 25,
                           color: appWhiteColor,
                         ),
                       )
@@ -82,14 +82,14 @@ class CommonBackgroundAuth extends StatelessWidget {
                         },
                         icon: const Icon(
                           Icons.arrow_back_ios,
-                          size: 30,
+                          size: 25,
                           color: Colors.transparent,
                         ),
                       ),
                 Expanded(
                   child: Text(
                     appBarTitle,
-                    style: AppTextStyle.regularBold30,
+                    style: AppTextStyle.regularBold30.copyWith(fontSize: 22),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -111,13 +111,13 @@ class CommonBackgroundAuth extends StatelessWidget {
             Expanded(
               child: Container(
                 width: Get.width,
-                margin: const EdgeInsets.only(left: 5, right: 5, top: 5),
+                margin: const EdgeInsets.only(left: 15, right: 15, top: 5),
                 decoration: BoxDecoration(
                   color: color ?? appWhiteColor,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                 child: Column(
                   children: [
                     Expanded(
@@ -130,7 +130,7 @@ class CommonBackgroundAuth extends StatelessWidget {
                 ),
               ),
             ),
-            height10,
+            height15,
             isFooter ?? true
                 ? Text(
                     footerTitle ?? "",
@@ -139,8 +139,8 @@ class CommonBackgroundAuth extends StatelessWidget {
                       decorationColor: appWhiteColor,
                     ),
                   )
-                : childFoter ?? SizedBox(),
-            isFooter ?? true ? height20 : const SizedBox(),
+                : childFoter ?? const SizedBox(),
+            isFooter ?? true ? height15 : const SizedBox(),
           ],
         ),
       ),
