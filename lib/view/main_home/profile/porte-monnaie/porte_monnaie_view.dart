@@ -39,7 +39,8 @@ class PorteMonnaieSacreen extends StatelessWidget {
                       },
                       child: Container(
                         margin: const EdgeInsets.all(20),
-                        padding: const EdgeInsets.all(2),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(

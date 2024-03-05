@@ -29,7 +29,7 @@ Future<void> dialogBuilder(BuildContext context) {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          backgroundColor: appBlackColor.withOpacity(0.8),
+                          backgroundColor: appBlackColor.withOpacity(0.9),
                           insetPadding:
                               const EdgeInsets.symmetric(horizontal: 20),
                           title: Text(

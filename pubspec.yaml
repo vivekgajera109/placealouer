@@ -42,7 +42,6 @@ dependencies:
   calendar_date_picker2: ^0.5.3
   google_maps_flutter: ^2.5.3
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -70,6 +69,7 @@ flutter:
     - assets/png/
     - assets/svg/
   #   - images/a_dot_ham.jpeg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

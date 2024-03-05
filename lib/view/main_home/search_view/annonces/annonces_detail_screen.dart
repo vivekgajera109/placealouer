@@ -8,6 +8,7 @@ import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
 import 'package:placealouer/view/main_home/message/book/book_screen.dart';
 import 'package:placealouer/view/main_home/message/chat/chat_screen.dart';
+import 'package:placealouer/view/main_home/profile/user_profile/user_profile.dart';
 
 class AnnoncesDetailScreen extends StatelessWidget {
   const AnnoncesDetailScreen({super.key});
@@ -19,13 +20,54 @@ class AnnoncesDetailScreen extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            SizedBox(
-              height: 300,
-              width: Get.width,
-              child: Image.asset(
-                "assets/png/garage.png",
-                fit: BoxFit.cover,
-              ),
+            Stack(
+              children: [
+                SizedBox(
+                  height: 300,
+                  width: Get.width,
+                  child: Image.asset(
+                    "assets/png/garage.png",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned(
+                  child: IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      size: 25,
+                      color: appWhiteColor,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 10,
+                  child: SizedBox(
+                    width: Get.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ...List.generate(
+                          3,
+                          (index) => Container(
+                            height: 12,
+                            width: 12,
+                            margin: const EdgeInsets.symmetric(horizontal: 15),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: 0 == index
+                                  ? appWhiteColor
+                                  : appBlackColor.withOpacity(0.7),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
             height10,
             Align(
@@ -50,10 +92,14 @@ class AnnoncesDetailScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const CircleAvatar(
-                            radius: 35,
-                            backgroundColor: Colors.transparent,
-                            backgroundImage: AssetImage("assets/png/pdp 1.png"),
+                          GestureDetector(
+                            onTap: () => Get.to(() => const UserProfile()),
+                            child: const CircleAvatar(
+                              radius: 35,
+                              backgroundColor: Colors.transparent,
+                              backgroundImage:
+                                  AssetImage("assets/png/pdp 1.png"),
+                            ),
                           ),
                           width15,
                           Column(

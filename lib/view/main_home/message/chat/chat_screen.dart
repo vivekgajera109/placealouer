@@ -6,6 +6,7 @@ import 'package:placealouer/common/text_widgets/input_text_field_widget.dart';
 import 'package:placealouer/common/widget/common_%20button.dart';
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
+import 'package:placealouer/constant/static_decoration.dart';
 import 'package:placealouer/controller/chat_controller/chat_controller.dart';
 import 'package:placealouer/view/main_home/message/book/book_screen.dart';
 import 'package:placealouer/view/main_home/profile/user_profile/user_profile.dart';
@@ -31,7 +32,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 style: AppTextStyle.regularBold20,
               )
             : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment: MainAxisAlignment.,
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -42,6 +43,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       backgroundImage: AssetImage("assets/png/pdp 1.png"),
                     ),
                   ),
+                  width15,
                   GestureDetector(
                     onTap: () {
                       Get.to(() => const UserProfile());
@@ -51,6 +53,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       style: AppTextStyle.regularBold20,
                     ),
                   ),
+                  Spacer(),
                   Card(
                     margin: const EdgeInsets.all(5),
                     child: Padding(
@@ -74,42 +77,45 @@ class _ChatScreenState extends State<ChatScreen> {
                 ],
               ),
       ),
-      bottomNavigationBar: Container(
-        height: 70,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: <Color>[
-              Color(0xff5ADBE4),
-              Color(0xff0552B0),
-            ],
+      bottomNavigationBar: Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: Container(
+          height: 70,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: <Color>[
+                Color(0xff5ADBE4),
+                Color(0xff0552B0),
+              ],
+            ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Row(
-            children: [
-              Transform.rotate(
-                angle: 45,
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.attach_file_rounded,
-                    color: appWhiteColor,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              children: [
+                Transform.rotate(
+                  angle: 45,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.attach_file_rounded,
+                      color: appWhiteColor,
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: textFormField(
-                  borderRaduis: 10,
-                  hintText: "Envoyer un message",
-                  hintStyle: AppTextStyle.normalRegularBold12
-                      .copyWith(color: appBlackColor),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                ),
-              )
-            ],
+                Expanded(
+                  child: textFormField(
+                    borderRaduis: 10,
+                    hintText: "Envoyer un message",
+                    hintStyle: AppTextStyle.normalRegularBold12
+                        .copyWith(color: appBlackColor),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:placealouer/common/background/common_background.dart';
 import 'package:placealouer/view/inscription/inscription_view.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,7 +17,6 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
       const Duration(seconds: 5),
       () {
-        // Get.offAll(() => const OnboardingScreen());
         Get.offAll(() => const InscriptionScreeen());
       },
     );
@@ -27,8 +24,20 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CommonBackground(
-      child: Image.asset("assets/png/app_icon.png"),
+    return Scaffold(
+      backgroundColor: Color(0xff319ACB),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/png/app_icon.png",
+              height: 150,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
