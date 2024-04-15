@@ -41,6 +41,9 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   calendar_date_picker2: ^0.5.3
   google_maps_flutter: ^2.5.3
+  dio: ^5.4.2+1
+  connectivity_plus: ^6.0.1
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:

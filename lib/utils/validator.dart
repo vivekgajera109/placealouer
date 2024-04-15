@@ -68,7 +68,9 @@ class Validators {
   static String? validateMobile(String value) {
     String patttern = r'(^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4,5})$)';
     RegExp regExp = RegExp(patttern);
-    if (!regExp.hasMatch(value)) {
+    if (value.isEmpty) {
+      return "Phone number is Required";
+    } else if (!regExp.hasMatch(value)) {
       return "Phone number is not valid";
     }
     return null;
@@ -80,9 +82,9 @@ class Validators {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regExp = RegExp(pattern);
     if (value == null) {
-      return "L'e-mail est requis";
+      return "Email is Required";
     } else if (!regExp.hasMatch(value)) {
-      return "Email invalide";
+      return "Invalid  Email";
     } else {
       return null;
     }
@@ -116,7 +118,7 @@ class Validators {
   // ignore: missing_return
   static String? validateText({String? value, String? text, int? maxLen}) {
     if (value.toString().isEmpty) {
-      return "$text est requis";
+      return "$text is required";
     } else {
       if (value.toString().isNotEmpty) {
         if (value.toString().length < 2) {
@@ -136,9 +138,9 @@ class Validators {
         r'^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$';
     RegExp regExp = RegExp(pattern);
     if (value.isEmpty) {
-      return "Mot de passe requis";
+      return "Password is Required";
     } else if (!regExp.hasMatch(value)) {
-      return "Le mot de passe doit comporter au moins 8 caractères et contenir un mélange de lettres majuscules et minuscules, au moins un chiffre et un caractère spécial (par exemple ! @ # ?).";
+      return "The password must be at least 8 characters long and contain a mixture of both uppercase and lowercase letters, at least one number and one special character (e.g.,! @ # ?).";
     } else {
       return null;
     }
