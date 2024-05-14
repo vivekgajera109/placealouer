@@ -116,7 +116,7 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
               margin: const EdgeInsets.only(bottom: 10),
               onTap: () async {
                 if (formKey.currentState!.validate()) {
-                  await authController.login(context);
+                  await authController.login();
                 }
               },
             ),

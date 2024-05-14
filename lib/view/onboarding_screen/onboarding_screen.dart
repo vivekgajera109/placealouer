@@ -6,9 +6,9 @@ import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/static_decoration.dart';
 import 'package:placealouer/controller/onboarding_controller/onboarding_controller.dart';
 import 'package:placealouer/model/onboarding_model.dart';
+import 'package:placealouer/view/inscription/inscription_view.dart';
 import 'package:placealouer/view/onboarding_screen/slider.dart';
 import 'package:placealouer/common/background/common_background.dart';
-import 'package:placealouer/view/verify_identity/verify_identity_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -83,8 +83,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 onPressed: () {
                   if (onboardingController.currentIndex.value ==
                       onboardingController.slides.length - 1) {
-                    Get.to(
-                      () => const VerifyIdentity(),
+                    Get.offAll(
+                      // () => const VerifyIdentity(),
+                      () => const InscriptionScreeen(),
                     );
                   }
                   controller?.nextPage(

@@ -7,6 +7,8 @@ import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
 import 'package:placealouer/controller/auth_controller/auth_controller.dart';
 import 'package:placealouer/common/background/common_background.dart';
+import 'package:placealouer/utils/process_indicator.dart';
+import 'package:placealouer/view/inscription/connexion/connexion_view.dart';
 
 class ReReinitializationScreen extends StatefulWidget {
   const ReReinitializationScreen({super.key});
@@ -72,10 +74,17 @@ class _ReReinitializationScreenState extends State<ReReinitializationScreen> {
               borderColor: buttonColor,
               titleColor: appWhiteColor,
               margin: const EdgeInsets.only(bottom: 20),
-              onTap: () {
+              onTap: () async {
                 // Get.to(() => const ConnexionScreen());
                 if (formKey.currentState!.validate()) {
-                  authController.resetPassword(context);
+                  Circle().show(context);
+                  await authController.resetPassword().then((value) {
+                    Circle().hide(context);
+                    if (value) {
+                      Get.offAll(() => const ConnexionScreen());
+                    }
+                  });
+                  Circle().hide(context);
                 }
               },
             ),

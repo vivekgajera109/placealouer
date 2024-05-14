@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:placealouer/common/background/common_background.dart';
 import 'package:placealouer/main.dart';
-import 'package:placealouer/view/inscription/inscription_view.dart';
 import 'package:placealouer/view/main_home/main_home.dart';
+import 'package:placealouer/view/onboarding_screen/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,7 +23,8 @@ class _SplashScreenState extends State<SplashScreen> {
       () {
         log("---->> ${box.read("token")}");
         box.read("token") == null
-            ? Get.offAll(() => const InscriptionScreeen())
+            // ? Get.offAll(() => const InscriptionScreeen())
+            ? Get.offAll(() => const OnboardingScreen())
             : Get.offAll(() => const MainHome());
       },
     );

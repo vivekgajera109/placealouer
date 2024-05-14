@@ -6,13 +6,29 @@ import 'package:placealouer/common/appbar/common_appbar.dart';
 import 'package:placealouer/common/widget/common_%20button.dart';
 import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
+import 'package:placealouer/controller/mes_annonces_controller/mes_annonces_controller.dart';
 import 'package:placealouer/view/main_home/Information_screen.dart';
 import 'package:placealouer/view/main_home/search_view/annonces/annonces_detail_screen.dart';
 
 import '../../../../constant/app_colors.dart';
 
-class AnnoncesScreen extends StatelessWidget {
+class AnnoncesScreen extends StatefulWidget {
   const AnnoncesScreen({super.key});
+
+  @override
+  State<AnnoncesScreen> createState() => _AnnoncesScreenState();
+}
+
+class _AnnoncesScreenState extends State<AnnoncesScreen> {
+  MesAnnoncesController mesAnnoncesController =
+      Get.put(MesAnnoncesController());
+
+  @override
+  void initState() {
+    // mesAnnoncesController.getParkings(context);
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

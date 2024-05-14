@@ -258,7 +258,8 @@ class NetworkDioHttp {
         };
       }
     } on DioError catch (e) {
-      log("message---->>> ${await handleError(e, context, message: e.response?.data['message'])}");
+      log("message---->>> 1 ${await handleError(e, context, message: e.response?.data['message'])}");
+      log("message---->>> 1 ${e.response?.statusCode}");
       if (context != null) processIndicator.hide(context);
       Map<String, dynamic> responseData = {
         'statusCode': e.response?.statusCode,

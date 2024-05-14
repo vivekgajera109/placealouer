@@ -9,9 +9,13 @@ import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
 import 'package:placealouer/controller/auth_controller/auth_controller.dart';
 import 'package:placealouer/common/background/common_background.dart';
+import 'package:placealouer/utils/process_indicator.dart';
+import 'package:placealouer/view/inscription/connexion/connexion_view.dart';
+import 'package:placealouer/view/inscription/reinitialization/re_reinitialization_view.dart';
 
 class CodeSreen extends StatefulWidget {
-  const CodeSreen({super.key});
+  final bool inSingup;
+  const CodeSreen({super.key, required this.inSingup});
 
   @override
   State<CodeSreen> createState() => _CodeSreenState();
@@ -89,7 +93,28 @@ class _CodeSreenState extends State<CodeSreen> {
                 if (formKey.currentState!.validate())
                 // Get.to(() => const ReReinitializationScreen());
                 {
-                  authController.otpVerification(context);
+                  widget.inSingup
+                      ? authController.signupVerification().then(
+                          (value) {
+                            Circle().show(context);
+                            if (value == true) {
+                              Circle().hide(context);
+                              Get.offAll(() => const ConnexionScreen());
+                            }
+                            Circle().hide(context);
+                          },
+                        )
+                      : authController.forgotPassOtpVerification().then(
+                          (value) {
+                            Circle().show(context);
+                            if (value == true) {
+                              Circle().hide(context);
+                              Get.offAll(
+                                  () => const ReReinitializationScreen());
+                            }
+                            Circle().hide(context);
+                          },
+                        );
                 }
               },
             ),

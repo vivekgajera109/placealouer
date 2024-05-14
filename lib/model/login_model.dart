@@ -1,46 +1,39 @@
 // To parse this JSON data, do
 //
-//     final loginModel = loginModelFromJson(jsonString);
+//     final loginModel = loginModelFromMap(jsonString);
 
 import 'dart:convert';
 
-LoginModel loginModelFromJson(String str) =>
-    LoginModel.fromJson(json.decode(str));
+LoginModel loginModelFromMap(String str) =>
+    LoginModel.fromMap(json.decode(str));
 
-String loginModelToJson(LoginModel data) => json.encode(data.toJson());
+String loginModelToMap(LoginModel data) => json.encode(data.toMap());
 
 class LoginModel {
   final bool? success;
-  final int? statusCode;
   final String? message;
-  final String? errorDescription;
   final LoginData? data;
   final Error? error;
 
   LoginModel({
     this.success,
     this.message,
-    this.errorDescription,
-    this.statusCode,
     this.data,
     this.error,
   });
 
-  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
+  factory LoginModel.fromMap(Map<String, dynamic> json) => LoginModel(
         success: json["success"],
-        statusCode: json["statusCode"],
         message: json["message"],
-        errorDescription: json["error_description"],
-        data: json["data"] == null ? null : LoginData.fromJson(json["data"]),
-        error: json["error"] == null ? null : Error.fromJson(json["error"]),
+        data: json["data"] == null ? null : LoginData.fromMap(json["data"]),
+        error: json["error"] == null ? null : Error.fromMap(json["error"]),
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
         "success": success,
         "message": message,
-        "error_description": errorDescription,
-        "data": data?.toJson(),
-        "error": error?.toJson(),
+        "data": data?.toMap(),
+        "error": error?.toMap(),
       };
 }
 
@@ -53,91 +46,111 @@ class LoginData {
     this.token,
   });
 
-  factory LoginData.fromJson(Map<String, dynamic> json) => LoginData(
-        user: json["user"] == null ? null : User.fromJson(json["user"]),
+  factory LoginData.fromMap(Map<String, dynamic> json) => LoginData(
+        user: json["user"] == null ? null : User.fromMap(json["user"]),
         token: json["token"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "user": user?.toJson(),
+  Map<String, dynamic> toMap() => {
+        "user": user?.toMap(),
         "token": token,
       };
 }
 
 class User {
-  final dynamic loginType;
-  final dynamic facebookId;
-  final dynamic appleAuthCode;
   final String? id;
   final String? firstName;
   final String? lastName;
-  final String? emailPhone;
+  final String? email;
+  final String? phone;
   final int? role;
   final bool? forgotOtpVerify;
   final bool? isdelete;
+  final bool? isverify;
+  final int? loginType;
+  final dynamic facebookId;
+  final dynamic appleAuthCode;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final DateTime? forgotOtpExpire;
+  final DateTime? signupOtpExpire;
+  final List<String>? uploadedIdentity;
+  final dynamic profileImg;
 
   User({
-    this.loginType,
-    this.facebookId,
-    this.appleAuthCode,
     this.id,
     this.firstName,
     this.lastName,
-    this.emailPhone,
+    this.email,
+    this.phone,
     this.role,
     this.forgotOtpVerify,
     this.isdelete,
+    this.isverify,
+    this.loginType,
+    this.facebookId,
+    this.appleAuthCode,
     this.createdAt,
     this.updatedAt,
-    this.forgotOtpExpire,
+    this.signupOtpExpire,
+    this.uploadedIdentity,
+    this.profileImg,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        loginType: json["loginType"],
-        facebookId: json["facebookId"],
-        appleAuthCode: json["appleAuthCode"],
+  factory User.fromMap(Map<String, dynamic> json) => User(
         id: json["_id"],
         firstName: json["firstName"],
         lastName: json["lastName"],
-        emailPhone: json["email_phone"],
+        email: json["email"],
+        phone: json["phone"],
         role: json["role"],
         forgotOtpVerify: json["forgotOtpVerify"],
         isdelete: json["isdelete"],
+        isverify: json["isverify"],
+        loginType: json["loginType"],
+        facebookId: json["facebookId"],
+        appleAuthCode: json["appleAuthCode"],
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null
             ? null
             : DateTime.parse(json["updatedAt"]),
-        forgotOtpExpire: json["forgotOtpExpire"] == null
+        signupOtpExpire: json["signupOtpExpire"] == null
             ? null
-            : DateTime.parse(json["forgotOtpExpire"]),
+            : DateTime.parse(json["signupOtpExpire"]),
+        uploadedIdentity: json["uploadedIdentity"] == null
+            ? []
+            : List<String>.from(json["uploadedIdentity"]!.map((x) => x)),
+        profileImg: json["profile_img"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "loginType": loginType,
-        "facebookId": facebookId,
-        "appleAuthCode": appleAuthCode,
+  Map<String, dynamic> toMap() => {
         "_id": id,
         "firstName": firstName,
         "lastName": lastName,
-        "email_phone": emailPhone,
+        "email": email,
+        "phone": phone,
         "role": role,
         "forgotOtpVerify": forgotOtpVerify,
         "isdelete": isdelete,
+        "isverify": isverify,
+        "loginType": loginType,
+        "facebookId": facebookId,
+        "appleAuthCode": appleAuthCode,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
-        "forgotOtpExpire": forgotOtpExpire?.toIso8601String(),
+        "signupOtpExpire": signupOtpExpire?.toIso8601String(),
+        "uploadedIdentity": uploadedIdentity == null
+            ? []
+            : List<dynamic>.from(uploadedIdentity!.map((x) => x)),
+        "profile_img": profileImg,
       };
 }
 
 class Error {
   Error();
 
-  factory Error.fromJson(Map<String, dynamic> json) => Error();
+  factory Error.fromMap(Map<String, dynamic> json) => Error();
 
-  Map<String, dynamic> toJson() => {};
+  Map<String, dynamic> toMap() => {};
 }

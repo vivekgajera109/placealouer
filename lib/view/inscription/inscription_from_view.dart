@@ -9,7 +9,9 @@ import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
 import 'package:placealouer/controller/auth_controller/auth_controller.dart';
+import 'package:placealouer/utils/process_indicator.dart';
 import 'package:placealouer/view/inscription/cgu/cgu_view.dart';
+import 'package:placealouer/view/inscription/code/code_view.dart';
 import 'package:placealouer/view/inscription/privacy_policy/privacy_policy.dart';
 
 class InscriptionFormScreen extends StatefulWidget {
@@ -211,7 +213,20 @@ class _InscriptionFormScreenState extends State<InscriptionFormScreen> {
                 margin: const EdgeInsets.only(bottom: 10),
                 onTap: () async {
                   if (formKey.currentState!.validate()) {
-                    await authController.signUp(context);
+                    Circle().show(context);
+                    await authController.signUp(context).then(
+                      (value) {
+                        Circle().hide(context);
+                        if (value == true) {
+                          Get.offAll(
+                            () => const CodeSreen(
+                              inSingup: true,
+                            ),
+                          );
+                        }
+                        Circle().hide(context);
+                      },
+                    );
                   }
                 },
               ),
