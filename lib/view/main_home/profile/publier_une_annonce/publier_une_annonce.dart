@@ -6,7 +6,6 @@ import 'package:placealouer/common/widget/common_%20button.dart';
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
-import 'package:placealouer/view/main_home/profile/select_car/select_car_screen.dart';
 import 'package:placealouer/view/verify_identity/verify_identity_screen.dart';
 
 class PublierUneAnnonce extends StatelessWidget {
@@ -131,7 +130,7 @@ class PublierUneAnnonce extends StatelessWidget {
             height10,
             CommonButton(
                 onTap: () {
-                  Get.to(() => const SelectCarScreen());
+                  // Get.to(() => const SelectCarScreen());
                 },
                 title: "Continuer",
                 margin: const EdgeInsets.only(bottom: 10)),

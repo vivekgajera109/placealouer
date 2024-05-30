@@ -588,7 +588,7 @@ class CommonMethod {
                   data: CupertinoThemeData(
                     textTheme: CupertinoTextThemeData(
                       dateTimePickerTextStyle: TextStyle(
-                        color: Theme.of(context).textTheme.headline1!.color,
+                        color: Theme.of(context).textTheme.displayLarge!.color,
                       ),
                     ),
                   ),
@@ -648,18 +648,18 @@ class CommonMethod {
                 color: Theme.of(context).textTheme.displayLarge!.color,
               ), // year gridbview picker
               titleMedium: AppTextStyle.normalRegularBold12.copyWith(
-                color: Theme.of(context).textTheme.headline1!.color,
+                color: Theme.of(context).textTheme.displayLarge!.color,
               ), // input
               titleSmall: AppTextStyle.normalRegularBold12.copyWith(
-                color: Theme.of(context).textTheme.headline1!.color,
+                color: Theme.of(context).textTheme.displayLarge!.color,
               ), // month/year picker
               bodySmall: AppTextStyle.normalRegularBold12.copyWith(
-                color: Theme.of(context).textTheme.headline1!.color,
+                color: Theme.of(context).textTheme.displayLarge!.color,
               ), // days
             ),
             colorScheme: Theme.of(context).colorScheme.copyWith(
                   primary: blueColor,
-                  onSurface: Theme.of(context).textTheme.headline1!.color!,
+                  onSurface: Theme.of(context).textTheme.displayLarge!.color!,
                   onPrimary: Colors.white,
                 ),
             // Buttons
@@ -760,14 +760,14 @@ class CommonMethod {
                     const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
                 leading: Icon(
                   Icons.photo_library_outlined,
-                  color: Theme.of(context).textTheme.headline1!.color,
+                  color: Theme.of(context).textTheme.displayLarge!.color,
                 ),
                 visualDensity:
                     const VisualDensity(horizontal: -2, vertical: -2),
                 title: Text(
                   "Photo Gallery",
                   style: TextStyle(
-                    color: Theme.of(context).textTheme.headline1!.color,
+                    color: Theme.of(context).textTheme.displayLarge!.color,
                   ),
                 ),
                 onTap: onTapGallery,

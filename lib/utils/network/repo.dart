@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
@@ -5,13 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:placealouer/app.dart';
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
+import 'package:placealouer/main.dart';
+import 'package:placealouer/model/get_booked_parking_model.dart';
+import 'package:placealouer/model/get_parking_model.dart';
+import 'package:placealouer/model/get_prosile_model.dart';
 import 'package:placealouer/model/login_model.dart';
 import 'package:placealouer/utils/network/network.dart';
 import 'package:placealouer/utils/network/request_class.dart';
 import 'package:placealouer/utils/network/response_class.dart';
+import 'package:placealouer/utils/process_indicator.dart';
 
 class ApiRepo {
-  static String baseUrl = "http://34.203.226.208:8001/";
+  static String baseUrl = "https://api.placealouer.in/";
 
   // Returns the base URL used for API calls.
   static String getBaseUrl() {
@@ -33,7 +40,7 @@ class ApiRepo {
   ///
   /// Returns a [String] representing the complete API URL with the concatenated [url] and [id].
   static String getApiUrlWithId(String url, String id) {
-    return "$baseUrl$url/$id";
+    return "$baseUrl$url=$id";
   }
 
   /// Logs in the user and returns a [ResponseData] object containing the response data.
@@ -67,8 +74,11 @@ class ApiRepo {
           message: 'Success');
       log("====---->> ${response.code}");
       if (res.statusCode == 200 || res.statusCode == 201) {
+        await box.write("token", res.data['data']['token']);
         globalScaffoldKey.currentState?.showSnackBar(successfulSnackBar(res));
+        NetworkDio.setHeaders({'authorization': 'Bearer ${box.read('token')}'});
       }
+
       return response;
     } catch (e, st) {
       log("----=-=-=--> $e");
@@ -226,6 +236,283 @@ class ApiRepo {
     }
   }
 
+  static Future<ResponseData<T>> getParkings<T>(
+      Map<String, dynamic> pageData) async {
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.post,
+          url: getApiUrl('user/vendor/parkings'),
+          headers: NetworkDio.getHeaders(),
+          body: RequestBody(data: pageData),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = GetParkingModel.fromJson(await validateResponse(res));
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        globalScaffoldKey.currentState?.showSnackBar(successfulSnackBar(res));
+      }
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> getProfile<T>() async {
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.get,
+          url: getApiUrl('user/getProfile'),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = GetProfileModel.fromJson(await validateResponse(res));
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> getRatingAndReview<T>(String vendorId) async {
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.get,
+          url: getApiUrlWithId('user/RatingAndReview/get?vendorId', vendorId),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = await validateResponse(res);
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> getBookedParkings<T>(
+      Map<String, dynamic> pageData) async {
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          body: RequestBody(data: pageData),
+          method: Method.post,
+          url: getApiUrl('user/parking/get'),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = GetBookedParkingsModel.fromJson(await validateResponse(res));
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> updateProfile<T>(
+      Map<String, dynamic> userData, BuildContext context) async {
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.put,
+          body: RequestBody(data: userData),
+          url: getApiUrl('user/updateProfile'),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = await validateResponse(res);
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        globalScaffoldKey.currentState?.showSnackBar(successfulSnackBar(res));
+      }
+
+      return response;
+    } catch (e) {
+      Circle().hide(context);
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> getParkingsID<T>(String parkingId) async {
+    log("parkingId---->>> $parkingId");
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.get,
+          url: getApiUrlWithId('user/vendor/parkingById?parkingId', parkingId),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = GetParkingModel.fromJson(await validateResponse(res));
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> getParkingsCar<T>(String parkingId) async {
+    log("parkingId---->>> $parkingId");
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.get,
+          url: getApiUrlWithId('user/parkingDetails?parkingId', parkingId),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = await validateResponse(res);
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> bookParkings<T>(
+      Map<String, dynamic>? parkingData, BuildContext context) async {
+    log("parkingId---->>> $parkingData");
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.post,
+          body: RequestBody(data: parkingData),
+          url: getApiUrl('user/parking/book'),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = await validateResponse(res);
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e) {
+      Circle().hide(context);
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> payment<T>(
+      Map<String, dynamic>? parkingData) async {
+    log("parkingId---->>> $parkingData");
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.post,
+          body: RequestBody(data: parkingData),
+          url: getApiUrl('user/createPayment'),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = await validateResponse(res);
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> addRating<T>(
+      Map<String, dynamic>? parkingRatingData) async {
+    log("parkingId---->>> $parkingRatingData");
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.post,
+          body: RequestBody(data: parkingRatingData),
+          url: getApiUrl('user/RatingAndReview/add'),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = await validateResponse(res);
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e, st) {
+      log("----=-=-=--> $e");
+      log("----=-=-=--> $st");
+
+      rethrow;
+    }
+  }
+
   /// Uploads a profile picture.
   ///
   /// This function creates a `FormData` object and adds multiple files to it.
@@ -238,10 +525,10 @@ class ApiRepo {
     var formData = FormData();
     try {
       formData.files.add(MapEntry(
-          'image', MultipartFile.fromBytes(value, filename: filename)));
+          'images', MultipartFile.fromBytes(value, filename: filename)));
       var res = await NetworkDio.multiPartRequest(
           request: MultiPartRequest(
-        url: getApiUrl('upload/media/image'),
+        url: getApiUrl('upload/images'),
         method: Method.post,
         headers: {
           ...NetworkDio.getHeaders(),
@@ -288,7 +575,7 @@ Future validateResponse(Response response) async {
     globalScaffoldKey.currentState?.showSnackBar(errorSnackBar(response));
     return response.data;
   } else if (response.statusCode == 401) {
-    log("--------------- 401 ");
+    log("--------------- 401 ${response.data}");
 
     globalScaffoldKey.currentState?.showSnackBar(errorSnackBar(response));
 

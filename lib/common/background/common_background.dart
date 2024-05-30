@@ -37,6 +37,7 @@ class CommonBackgroundAuth extends StatelessWidget {
   final String? footerTitle;
   final Widget child;
   final Widget? childScial;
+  final void Function()? footerOnTap;
   final Widget? childFoter;
   final bool? isScial;
   final bool? isLeading;
@@ -49,6 +50,7 @@ class CommonBackgroundAuth extends StatelessWidget {
       required this.child,
       this.isScial = false,
       this.isLeading = true,
+      this.footerOnTap,
       this.isFooter = true,
       this.footerTitle,
       this.childFoter,
@@ -132,11 +134,14 @@ class CommonBackgroundAuth extends StatelessWidget {
             ),
             height15,
             isFooter ?? true
-                ? Text(
-                    footerTitle ?? "",
-                    style: AppTextStyle.normalRegularBold15.copyWith(
-                      decoration: TextDecoration.underline,
-                      decorationColor: appWhiteColor,
+                ? GestureDetector(
+                    onTap: footerOnTap,
+                    child: Text(
+                      footerTitle ?? "",
+                      style: AppTextStyle.normalRegularBold15.copyWith(
+                        decoration: TextDecoration.underline,
+                        decorationColor: appWhiteColor,
+                      ),
                     ),
                   )
                 : childFoter ?? const SizedBox(),

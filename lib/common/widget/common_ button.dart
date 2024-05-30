@@ -14,6 +14,7 @@ class CommonButton extends StatelessWidget {
   final TextStyle? style;
   final double? height;
   final double? width;
+  final double? radius;
   final EdgeInsetsGeometry? margin;
   const CommonButton(
       {super.key,
@@ -21,6 +22,7 @@ class CommonButton extends StatelessWidget {
       this.buttonColor,
       required this.title,
       this.borderColor,
+      this.radius,
       this.height,
       this.width,
       this.margin,
@@ -38,7 +40,7 @@ class CommonButton extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: borderColor ?? appBlackColor),
           color: buttonColor ?? appWhiteColor,
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(radius ?? 50),
         ),
         child: Center(
           child: Text(

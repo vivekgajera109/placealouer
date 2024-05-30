@@ -6,7 +6,6 @@ import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
 import 'package:placealouer/view/main_home/message/book/book_screen.dart';
-import 'package:placealouer/view/main_home/profile/select_car/select_car_screen.dart';
 
 class SearchView extends StatelessWidget {
   const SearchView({super.key});
@@ -94,7 +93,7 @@ class SearchView extends StatelessWidget {
                     customHeight(70),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => const SelectCarScreen());
+                        // Get.to(() => const SelectCarScreen());
                       },
                       child: Card(
                         color: containerColor,
@@ -119,7 +118,7 @@ class SearchView extends StatelessWidget {
                 ),
               ),
               CommonButton(
-                margin: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 title: "VALIDER",
                 onTap: () {
                   Get.back();

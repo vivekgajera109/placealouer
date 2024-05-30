@@ -46,6 +46,7 @@ class NetworkDio {
           throw Exception("Invalid Method");
       }
     } on DioException catch (e, st) {
+      log('\x1B[31m error ${e}');
       log('\x1B[31m error ${e.requestOptions.data}');
       log('\x1B[31m error ${e.requestOptions.headers}');
       log('\x1B[31m error- ST ${st}');

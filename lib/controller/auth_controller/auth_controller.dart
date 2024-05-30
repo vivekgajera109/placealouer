@@ -6,10 +6,7 @@ import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/main.dart';
 import 'package:placealouer/model/login_model.dart';
 import 'package:placealouer/utils/network/repo.dart';
-import 'package:placealouer/utils/repository/network_repository.dart';
-import 'package:placealouer/view/inscription/code/code_view.dart';
-import 'package:placealouer/view/inscription/connexion/connexion_view.dart';
-import 'package:placealouer/view/inscription/reinitialization/re_reinitialization_view.dart';
+import 'package:placealouer/view/main_home/main_home.dart';
 import 'package:placealouer/view/verify_identity/verify_identity_screen.dart';
 
 import '../../utils/common_methods.dart';
@@ -67,7 +64,11 @@ class AuthController extends GetxController {
       // CommonMethod().getXSnackBar(
       //     "Success", res.message ?? "Login successfully", greenContainerColor);
       // clear();
-      Get.offAll(() => const VerifyIdentity());
+      res.data?.data?.user?.uploadedIdentity == []
+          ? Get.offAll(() => const VerifyIdentity())
+          : Get.offAll(
+              () => const MainHome(),
+            );
       return res.data?.data;
     } else {
       return null;

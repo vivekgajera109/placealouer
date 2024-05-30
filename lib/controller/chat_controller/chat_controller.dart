@@ -29,7 +29,6 @@ class ChatController extends GetxController {
       time: DateTime.now(),
     ),
   ].obs;
-  RxList<DateTime?> rangeDatePickerValueWithDefaultValue = <DateTime?>[].obs;
   RxBool isBook = false.obs;
 }
 

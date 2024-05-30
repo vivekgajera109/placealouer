@@ -11,4 +11,6 @@ const Color blueColor = Color(0XFF4F8BFF);
 const Color containerColor = Color(0XFFDFF2FA);
 const Color redContainerColor = Color(0XFFF66868);
 const Color greenContainerColor = Color(0XFF59D475);
+const Color successfulColor = Color(0XFF00FF96);
+const Color unsuccessfulColor = Color(0XFFFF6060);
 const Color greenSwitchColor = Color(0XFF21EA4D);

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:placealouer/common/background/common_background.dart';
 import 'package:placealouer/main.dart';
 import 'package:placealouer/view/main_home/main_home.dart';
@@ -18,16 +19,25 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(
-      const Duration(seconds: 5),
-      () {
-        log("---->> ${box.read("token")}");
-        box.read("token") == null
-            // ? Get.offAll(() => const InscriptionScreeen())
-            ? Get.offAll(() => const OnboardingScreen())
-            : Get.offAll(() => const MainHome());
-      },
-    );
+    Permission.location.request().then(
+          (value) => Permission.location.isGranted.then(
+            (value) {
+              if (value) {
+                Timer(
+                  const Duration(seconds: 5),
+                  () {
+                    log("---->> ${box.read("token")}");
+                    box.read("token") == null
+                        // ? Get.offAll(() => const InscriptionScreeen())
+                        ? Get.offAll(() => const OnboardingScreen())
+                        : Get.offAll(() => const MainHome());
+                  },
+                );
+              }
+              log("-------------> Permission $value");
+            },
+          ),
+        );
   }
 
   @override

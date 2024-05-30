@@ -7,6 +7,7 @@ import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
 import 'package:placealouer/controller/auth_controller/auth_controller.dart';
+import 'package:placealouer/view/inscription/inscription_from_view.dart';
 import 'package:placealouer/view/inscription/reinitialization/reinitialization_view.dart';
 import 'package:placealouer/common/background/common_background.dart';
 
@@ -26,6 +27,11 @@ class _ConnexionScreenState extends State<ConnexionScreen> {
   Widget build(BuildContext context) {
     return CommonBackgroundAuth(
       footerTitle: "Mentions légales",
+      footerOnTap: () {
+        Get.to(
+          () => const InscriptionFormScreen(),
+        );
+      },
       isScial: true,
       isFooter: true,
       appBarTitle: "CONNEXION",

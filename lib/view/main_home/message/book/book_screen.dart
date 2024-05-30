@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:placealouer/common/appbar/common_appbar.dart';
@@ -6,10 +7,13 @@ import 'package:placealouer/common/widget/common_%20button.dart';
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
-import 'package:placealouer/controller/chat_controller/chat_controller.dart';
+import 'package:placealouer/controller/select_car_controller/select_car_controller.dart';
+import 'package:placealouer/utils/process_indicator.dart';
 
 class BookScreen extends StatefulWidget {
-  const BookScreen({super.key});
+  final dynamic parkingDetails;
+  final String? parkingId;
+  const BookScreen({super.key, this.parkingDetails, this.parkingId});
 
   @override
   State<BookScreen> createState() => _BookScreenState();
@@ -18,7 +22,7 @@ class BookScreen extends StatefulWidget {
 class _BookScreenState extends State<BookScreen> {
   @override
   Widget build(BuildContext context) {
-    ChatController chatController = Get.put(ChatController());
+    SelectCarController selectCarController = Get.put(SelectCarController());
     return Scaffold(
       appBar: commonAppBar(
         title: Text(
@@ -30,7 +34,8 @@ class _BookScreenState extends State<BookScreen> {
         padding: const EdgeInsets.all(10),
         children: [
           commonClendar(
-            chatController: chatController,
+            chatController: selectCarController,
+            setState1: setState,
           ),
           height20,
           Padding(
@@ -38,6 +43,54 @@ class _BookScreenState extends State<BookScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  "Les détails du véhicule :",
+                  style: AppTextStyle.regularBold15
+                      .copyWith(color: appBlackColor, fontSize: 18),
+                ),
+                height10,
+                TextFormField(
+                  controller: selectCarController.vehicleNameController,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 10,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.horizontal(
+                        left: Radius.circular(30.0),
+                        right: Radius.circular(30.0),
+                      ),
+                    ),
+                    filled: true,
+                    hintStyle: TextStyle(color: Colors.grey),
+                    hintText: "Nom du véhicule",
+                    fillColor: textFormFieldColor,
+                  ),
+                ),
+                height10,
+                TextFormField(
+                  controller: selectCarController.vehicleNumberController,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 10,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.horizontal(
+                        left: Radius.circular(30.0),
+                        right: Radius.circular(30.0),
+                      ),
+                    ),
+                    filled: true,
+                    hintStyle: TextStyle(color: Colors.grey),
+                    hintText: "Numéro de véhicule",
+                    fillColor: textFormFieldColor,
+                  ),
+                ),
+                height10,
                 Text(
                   "Réservation du :",
                   style: AppTextStyle.regularBold15
@@ -48,6 +101,9 @@ class _BookScreenState extends State<BookScreen> {
                   Expanded(
                       flex: 2,
                       child: TextFormField(
+                        controller:
+                            selectCarController.firstDateController.value,
+                        readOnly: true,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             vertical: 0,
@@ -60,7 +116,7 @@ class _BookScreenState extends State<BookScreen> {
                             ),
                           ),
                           filled: true,
-                          hintStyle: TextStyle(color: appBlackColor),
+                          hintStyle: TextStyle(color: Colors.grey),
                           hintText: "18 janvier",
                           fillColor: textFormFieldColor,
                         ),
@@ -96,21 +152,23 @@ class _BookScreenState extends State<BookScreen> {
                           size: 20,
                         ),
                         filled: true,
-                        hintStyle: TextStyle(color: appBlackColor),
-                        hintText: "1h",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        hintText: "Sélectionnez les heures",
                         fillColor: textFormFieldColor,
                       ),
                       borderRadius: BorderRadius.circular(10),
                       focusColor: textFormFieldColor,
                       icon: const SizedBox.shrink(),
                       items: List.generate(
-                        23,
+                        24,
                         (index) => DropdownMenuItem(
                           value: index + 1,
                           child: Text("${index + 1}h"),
                         ),
                       ),
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        selectCarController.firstHour.value = value ?? 0;
+                      },
                     ),
                   )
                 ]),
@@ -127,6 +185,9 @@ class _BookScreenState extends State<BookScreen> {
                   Expanded(
                       flex: 2,
                       child: TextFormField(
+                        controller:
+                            selectCarController.lastDateController.value,
+                        readOnly: true,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             vertical: 0,
@@ -139,7 +200,7 @@ class _BookScreenState extends State<BookScreen> {
                             ),
                           ),
                           filled: true,
-                          hintStyle: TextStyle(color: appBlackColor),
+                          hintStyle: TextStyle(color: Colors.grey),
                           hintText: "24 janvier",
                           fillColor: textFormFieldColor,
                         ),
@@ -175,21 +236,24 @@ class _BookScreenState extends State<BookScreen> {
                           size: 20,
                         ),
                         filled: true,
-                        hintStyle: TextStyle(color: appBlackColor),
-                        hintText: "1h*",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        hintText: "Sélectionnez les heures*",
                         fillColor: textFormFieldColor,
                       ),
                       borderRadius: BorderRadius.circular(10),
                       focusColor: textFormFieldColor,
                       icon: const SizedBox.shrink(),
                       items: List.generate(
-                        23,
+                        24,
                         (index) => DropdownMenuItem(
                           value: index + 1,
                           child: Text("${index + 1}h*"),
                         ),
                       ),
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        selectCarController.lastHour.value = value ?? 0;
+                        log("-=-=-=-=   ${selectCarController.lastHour}");
+                      },
                     ),
                   )
                 ]),
@@ -203,67 +267,116 @@ class _BookScreenState extends State<BookScreen> {
                 ),
                 height20,
                 height10,
-                Text(
-                  "Total :",
-                  style: AppTextStyle.regularBold15
-                      .copyWith(color: appBlackColor, fontSize: 24),
-                ),
-                height15,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "2h lundi 19/01",
-                      style: AppTextStyle.normalSemiBold15
-                          .copyWith(color: appBlackColor),
-                    ),
-                    Text(
-                      "2,5€",
-                      style: AppTextStyle.normalSemiBold15
-                          .copyWith(color: appBlackColor),
-                    ),
-                  ],
-                ),
-                height10,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "1j mercredi 21/01",
-                      style: AppTextStyle.normalSemiBold15
-                          .copyWith(color: appBlackColor),
-                    ),
-                    Text(
-                      "12,5€",
-                      style: AppTextStyle.normalSemiBold15
-                          .copyWith(color: appBlackColor),
-                    ),
-                  ],
-                ),
-                height10,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Frais de service (10%)",
-                      style: AppTextStyle.normalSemiBold15
-                          .copyWith(color: appBlackColor),
-                    ),
-                    Text(
-                      "1,50€",
-                      style: AppTextStyle.normalSemiBold15
-                          .copyWith(color: appBlackColor),
-                    ),
-                  ],
-                ),
+                Obx(() => selectCarController.firstDateController.value.text !=
+                        ""
+                    ? Column(
+                        children: [
+                          Text(
+                            "Total :",
+                            style: AppTextStyle.regularBold15
+                                .copyWith(color: appBlackColor, fontSize: 24),
+                          ),
+                          height15,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Heures totales",
+                                style: AppTextStyle.normalSemiBold15
+                                    .copyWith(color: appBlackColor),
+                              ),
+                              Obx(() {
+                                return Text(
+                                  "${selectCarController.dateRange.value * 24 - (selectCarController.firstHour.value) - (24 - selectCarController.lastHour.value)} h",
+                                  style: AppTextStyle.normalSemiBold15
+                                      .copyWith(color: appBlackColor),
+                                );
+                              }),
+                            ],
+                          ),
+                          height10,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Prix ​​par heure",
+                                style: AppTextStyle.normalSemiBold15
+                                    .copyWith(color: appBlackColor),
+                              ),
+                              Text(
+                                "${widget.parkingDetails["pricePerHour"]}€",
+                                style: AppTextStyle.normalSemiBold15
+                                    .copyWith(color: appBlackColor),
+                              ),
+                            ],
+                          ),
+                          height10,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Charge totale",
+                                style: AppTextStyle.normalSemiBold15
+                                    .copyWith(color: appBlackColor),
+                              ),
+                              Obx(
+                                () {
+                                  selectCarController
+                                      .totalHoures.value = (selectCarController
+                                              .dateRange.value *
+                                          24) -
+                                      (selectCarController.firstHour.value) -
+                                      (24 - selectCarController.lastHour.value);
+                                  return Text(
+                                    "${(selectCarController.totalHoures.value * widget.parkingDetails["pricePerHour"])}€",
+                                    style: AppTextStyle.normalSemiBold15
+                                        .copyWith(color: appBlackColor),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                          // height10,
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     Text(
+                          //       "Frais de service (10%)",
+                          //       style: AppTextStyle.normalSemiBold15
+                          //           .copyWith(color: appBlackColor),
+                          //     ),
+                          //     Text(
+                          //       "1,50€",
+                          //       style: AppTextStyle.normalSemiBold15
+                          //           .copyWith(color: appBlackColor),
+                          //     ),
+                          //   ],
+                          // ),
+                        ],
+                      )
+                    : const SizedBox()),
                 height20,
                 height20,
                 Center(
                     child: CommonButton(
                   margin: EdgeInsets.zero,
-                  onTap: () {
-                    chatController.isBook.value = true;
-                    Get.back();
+                  onTap: () async {
+                    Circle().show(context);
+                    await selectCarController
+                        .bookParkings(widget.parkingId ?? "",
+                            widget.parkingDetails["vehicleType"], context)
+                        .then((value) {
+                      Circle().hide(context);
+                      // return {
+                      //   if (value)
+                      //     {
+                      //       Get.offAll(() => const MainHome()),
+                      //     }
+                      // };
+                    }).then((value) => Circle().hide(context));
+                    Circle().hide(context);
+                    // chatController.isBook.value = true;
+                    // Get.back();
                   },
                   borderColor: buttonColor,
                   titleColor: appWhiteColor,
