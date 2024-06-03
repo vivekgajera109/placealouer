@@ -4,7 +4,8 @@ import 'package:placealouer/common/widget/common_%20button.dart';
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
-import 'package:placealouer/view/main_home/main_home.dart';
+import 'package:placealouer/controller/auth_controller/verify_identity_controller.dart';
+import 'package:placealouer/utils/process_indicator.dart';
 import 'package:placealouer/common/background/common_background.dart';
 
 class VerifyIdentity extends StatefulWidget {
@@ -15,6 +16,8 @@ class VerifyIdentity extends StatefulWidget {
 }
 
 class _VerifyIdentityState extends State<VerifyIdentity> {
+  VerifyIdentityController verifyIdentityController =
+      Get.put(VerifyIdentityController());
   @override
   Widget build(BuildContext context) {
     return CommonBackground(
@@ -32,24 +35,59 @@ class _VerifyIdentityState extends State<VerifyIdentity> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    commonCard(
-                      title: "Recto Carte d’identité",
-                      onTap: () {},
+                    Obx(
+                      () => verifyIdentityController
+                              .selectedFileRecto.value.isEmpty
+                          ? commonCard(
+                              title: "Recto Carte d’identité",
+                              onTap: () {
+                                verifyIdentityController.pickFileRecto();
+                              },
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.memory(
+                                verifyIdentityController
+                                    .selectedFileRecto.value,
+                                height: 140,
+                                width: 140,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                     ),
-                    commonCard(
-                      title: "Verso Carte d’identité",
-                      onTap: () {},
-                    ),
+                    Obx(
+                      () => verifyIdentityController
+                              .selectedFileVerso.value.isEmpty
+                          ? commonCard(
+                              title: "Verso Carte d’identité",
+                              onTap: () {
+                                verifyIdentityController.pickFileVerso();
+                              },
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.memory(
+                                verifyIdentityController
+                                    .selectedFileVerso.value,
+                                height: 140,
+                                width: 140,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                    )
                   ],
                 )
               ],
             ),
             CommonButton(
               title: "Continuer",
-              onTap: () {
-                Get.to(
-                  () => const MainHome(),
-                );
+              onTap: () async {
+                Circle().show(context);
+                await verifyIdentityController.uplodImage(context);
+                Circle().hide(context);
+                // Get.to(
+                //   () => const MainHome(),
+                // );
               },
             ),
           ],

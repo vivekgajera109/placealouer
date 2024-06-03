@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -158,13 +158,22 @@ class _AnnoncesDetailScreenState extends State<AnnoncesDetailScreen> {
                                           child: CircleAvatar(
                                             radius: 30,
                                             backgroundColor: Colors.transparent,
-                                            backgroundImage: NetworkImage(
-                                                mesAnnoncesController
+                                            backgroundImage: mesAnnoncesController
                                                         .parkingDetails
                                                         .value
                                                         .vendor
-                                                        ?.profileImg ??
-                                                    ""),
+                                                        ?.profileImg ==
+                                                    null
+                                                ? const AssetImage(
+                                                        "assets/png/pdp 1.png")
+                                                    as ImageProvider
+                                                : NetworkImage(
+                                                    mesAnnoncesController
+                                                            .parkingDetails
+                                                            .value
+                                                            .vendor
+                                                            ?.profileImg ??
+                                                        ""),
                                           ),
                                         ),
                                         width15,
@@ -188,7 +197,9 @@ class _AnnoncesDetailScreenState extends State<AnnoncesDetailScreen> {
                                                 rating: mesAnnoncesController
                                                         .parkingDetails
                                                         .value
-                                                        .avgrating ??
+                                                        .vendor
+                                                        ?.avgRating
+                                                        ?.toDouble() ??
                                                     0.0,
                                                 itemBuilder: (context, index) {
                                                   return const Icon(
@@ -284,7 +295,35 @@ class _AnnoncesDetailScreenState extends State<AnnoncesDetailScreen> {
               Expanded(
                 child: CommonButton(
                   onTap: () {
-                    Get.to(() => const ChatScreen());
+                    // 665ac569ff7be19a2bedaad0 p
+                    // 665ac569ff7be19a2bedaad0 d
+
+                    log("conversationId message : ${mesAnnoncesController.parkingDetails.value.vendorId}");
+                    mesAnnoncesController
+                        .getConversationId(
+                            context,
+                            mesAnnoncesController
+                                    .parkingDetails.value.vendorId ??
+                                "")
+                        .then(
+                      (value) {
+                        log("conversationId message : conversation id : ${value["data"]["conversationId"]}");
+                        return Get.to(
+                          () => ChatScreen(
+                            // senderId: userController.user.value.id ?? "",
+                            imageUrl: mesAnnoncesController
+                                    .parkingDetails.value.vendor?.profileImg ??
+                                "",
+                            conversationId: value["data"]["conversationId"],
+                            receiverId: mesAnnoncesController
+                                    .parkingDetails.value.vendorId ??
+                                "",
+                            name:
+                                "${mesAnnoncesController.parkingDetails.value.vendor?.firstName} ${mesAnnoncesController.parkingDetails.value.vendor?.lastName}",
+                          ),
+                        );
+                      },
+                    );
                   },
                   height: 40,
                   title: "Contacter",

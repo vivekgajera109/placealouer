@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:placealouer/common/widget/common_%20button.dart';
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
+import 'package:placealouer/constant/social_login.dart';
 
 import '../../../constant/static_decoration.dart';
 
-socialLoginView() {
+socialLoginView({required BuildContext context}) {
   return Column(
     children: [
       Row(
@@ -31,7 +32,7 @@ socialLoginView() {
         ],
       ),
       height20,
-      const Row(
+      Row(
         children: [
           width15,
           Expanded(
@@ -39,7 +40,12 @@ socialLoginView() {
           ),
           width15,
           Expanded(
-            child: CommonIconButton(iconUrl: "assets/svg/google_ic.svg"),
+            child: CommonIconButton(
+              iconUrl: "assets/svg/google_ic.svg",
+              onTap: () {
+                signup(context);
+              },
+            ),
           ),
           width15,
           Expanded(

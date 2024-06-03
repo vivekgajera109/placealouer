@@ -1,17 +1,19 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:developer';
-import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:placealouer/app.dart';
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
+import 'package:placealouer/controller/auth_controller/verify_identity_controller.dart';
 import 'package:placealouer/main.dart';
 import 'package:placealouer/model/get_booked_parking_model.dart';
+import 'package:placealouer/model/get_chat_list_model.dart';
 import 'package:placealouer/model/get_parking_model.dart';
 import 'package:placealouer/model/get_prosile_model.dart';
 import 'package:placealouer/model/login_model.dart';
+import 'package:placealouer/model/transection_model.dart';
 import 'package:placealouer/utils/network/network.dart';
 import 'package:placealouer/utils/network/request_class.dart';
 import 'package:placealouer/utils/network/response_class.dart';
@@ -66,6 +68,42 @@ class ApiRepo {
 
       /// wrap [validateResponse] with toJson methos of model
       final data = LoginModel.fromMap(await validateResponse(res));
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+      log("====---->> ${response.code}");
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        await box.write("token", res.data['data']['token']);
+        globalScaffoldKey.currentState?.showSnackBar(successfulSnackBar(res));
+        NetworkDio.setHeaders({'authorization': 'Bearer ${box.read('token')}'});
+      }
+
+      return response;
+    } catch (e, st) {
+      log("----=-=-=--> $e");
+      log("----=-=-=--> $st");
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> socialLogin<T>(
+      Map<String, dynamic> socialLoginToken) async {
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.post,
+          url: getApiUrl('user/socialLogin'),
+          body: RequestBody(data: socialLoginToken),
+        ),
+      );
+
+      log("------------>> Res ${res.statusCode}");
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = await validateResponse(res);
 
       final response = ResponseData<T>(
           code: res.statusCode,
@@ -256,9 +294,94 @@ class ApiRepo {
           data: data as T,
           status: res.statusMessage,
           message: 'Success');
-      if (res.statusCode == 200 || res.statusCode == 201) {
-        globalScaffoldKey.currentState?.showSnackBar(successfulSnackBar(res));
-      }
+      // if (res.statusCode == 200 || res.statusCode == 201) {
+      //   globalScaffoldKey.currentState?.showSnackBar(successfulSnackBar(res));
+      // }
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> userTransection<T>() async {
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.get,
+          url: getApiUrl('user/userTransection'),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = TransectionModel.fromJson(await validateResponse(res));
+
+      final response = ResponseData<T>(
+        code: res.statusCode,
+        data: data as T,
+        status: res.statusMessage,
+        message: 'Success',
+      );
+      // if (res.statusCode == 200 || res.statusCode == 201) {
+      //   globalScaffoldKey.currentState?.showSnackBar(successfulSnackBar(res));
+      // }
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> successPage<T>(
+      {required String payerID, required String paymentId}) async {
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.post,
+          url: getApiUrl(
+              'user/successPage?PayerID=$payerID&paymentId=$paymentId'),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = await validateResponse(res);
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+      // if (res.statusCode == 200 || res.statusCode == 201) {
+      //   globalScaffoldKey.currentState?.showSnackBar(successfulSnackBar(res));
+      // }
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> cancelPage<T>(
+      {required String paymentId}) async {
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.post,
+          url: getApiUrl('user/cancelPage?paymentId=$paymentId'),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = await validateResponse(res);
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+      // if (res.statusCode == 200 || res.statusCode == 201) {
+      //   globalScaffoldKey.currentState?.showSnackBar(successfulSnackBar(res));
+      // }
       return response;
     } catch (e) {
       rethrow;
@@ -454,6 +577,115 @@ class ApiRepo {
     }
   }
 
+  static Future<ResponseData<T>> bookParkingsCancel<T>(
+      Map<String, dynamic>? bookParkingId, BuildContext context) async {
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.post,
+          body: RequestBody(data: bookParkingId),
+          url: getApiUrl('user/refundPayment'),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = await validateResponse(res);
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e) {
+      Circle().hide(context);
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> getConversationId<T>(
+      String? receiverId, BuildContext context) async {
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.get,
+          url:
+              getApiUrlWithId('user/getConversationId?receiverId', receiverId!),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = await validateResponse(res);
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e) {
+      Circle().hide(context);
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> getChatList<T>(BuildContext context) async {
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.get,
+          url: getApiUrl('user/getChatList'),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = GetChatListModel.fromJson(await validateResponse(res));
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e) {
+      Circle().hide(context);
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> getChat<T>(
+      BuildContext context, String conversationId) async {
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.get,
+          url: getApiUrlWithId('user/getChat?conversationId', conversationId),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = GetChatModel.fromJson(await validateResponse(res));
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e) {
+      Circle().hide(context);
+      rethrow;
+    }
+  }
+
   static Future<ResponseData<T>> payment<T>(
       Map<String, dynamic>? parkingData) async {
     log("parkingId---->>> $parkingData");
@@ -513,6 +745,68 @@ class ApiRepo {
     }
   }
 
+  static Future<ResponseData<T>> deleteRating<T>(
+      String ratingAndReviewId) async {
+    log("parkingId---->>> $ratingAndReviewId");
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.delete,
+          url: getApiUrlWithId('user/RatingAndReview/delete?RatingAndReviewId',
+              ratingAndReviewId),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = await validateResponse(res);
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e, st) {
+      log("----=-=-=--> $e");
+      log("----=-=-=--> $st");
+
+      rethrow;
+    }
+  }
+
+  static Future<ResponseData<T>> addIdentity<T>(
+      Map<String, dynamic>? identityData) async {
+    log("parkingId---->>> $identityData");
+    try {
+      final res = await NetworkDio.request(
+        request: Request(
+          method: Method.post,
+          body: RequestBody(data: identityData),
+          url: getApiUrl('user/addIdentity'),
+          headers: NetworkDio.getHeaders(),
+        ),
+      );
+
+      /// wrap [validateResponse] with toJson methos of model
+      final data = await validateResponse(res);
+
+      final response = ResponseData<T>(
+          code: res.statusCode,
+          data: data as T,
+          status: res.statusMessage,
+          message: 'Success');
+
+      return response;
+    } catch (e, st) {
+      log("----=-=-=--> $e");
+      log("----=-=-=--> $st");
+
+      rethrow;
+    }
+  }
+
   /// Uploads a profile picture.
   ///
   /// This function creates a `FormData` object and adds multiple files to it.
@@ -521,11 +815,15 @@ class ApiRepo {
   ///
   /// Returns a `Future` that completes with the response data from the request.
   static Future<ResponseData<T>> uploadImage<T>(
-      Uint8List value, String filename) async {
+    // Uint8List value, String filename
+    List<FileRequestBody> value,
+  ) async {
     var formData = FormData();
     try {
-      formData.files.add(MapEntry(
-          'images', MultipartFile.fromBytes(value, filename: filename)));
+      for (var element in value) {
+        formData.files.add(MapEntry('images',
+            MultipartFile.fromBytes(element.file, filename: element.name)));
+      }
       var res = await NetworkDio.multiPartRequest(
           request: MultiPartRequest(
         url: getApiUrl('upload/images'),

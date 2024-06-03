@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/controller/main_home_controller/main_home_controller.dart';
+import 'package:placealouer/controller/profile_controller/profile_controller.dart';
 import 'package:placealouer/view/main_home/message/message_screen.dart';
 import 'package:placealouer/view/main_home/profile/profile_view.dart';
 import 'package:placealouer/view/main_home/reservations/reservations_screen.dart';
@@ -16,6 +17,7 @@ class MainHome extends StatefulWidget {
 
 class _MainHomeState extends State<MainHome> {
   MainHomeController mainHomeController = Get.put(MainHomeController());
+  ProfileController profileController = Get.put(ProfileController());
   void _onItemTapped(int index) {
     setState(() {
       mainHomeController.selectedIndex.value = index;
@@ -30,6 +32,14 @@ class _MainHomeState extends State<MainHome> {
     const MessageScreen(),
     const ProfileScreen()
   ];
+
+  @override
+  void initState() {
+    profileController.getProfile();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

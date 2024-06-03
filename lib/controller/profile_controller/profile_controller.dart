@@ -7,7 +7,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:placealouer/controller/auth_controller/verify_identity_controller.dart';
+import 'package:placealouer/main.dart';
 import 'package:placealouer/model/get_prosile_model.dart';
+import 'package:placealouer/model/transection_model.dart';
 import 'package:placealouer/utils/network/repo.dart';
 import 'package:placealouer/utils/process_indicator.dart';
 
@@ -15,9 +18,24 @@ class ProfileController extends GetxController {
   Rx<ProfileUser> userData = ProfileUser().obs;
   Future<GetProfileData?> getProfile() async {
     var res = await ApiRepo.getProfile<GetProfileModel>();
-    log("----------=-> ${res.data?.data?.user}");
     if (res.code == 200) {
       userData.value = res.data?.data?.user ?? ProfileUser();
+      box.write('userId', userData.value.id);
+    }
+    // return null;
+    if (res.code == 200) {
+      return res.data?.data;
+    } else {
+      return res.data?.data;
+    }
+  }
+
+  Future<TransectionData?> getTransection() async {
+    var res = await ApiRepo.userTransection<TransectionModel>();
+    if (res.code == 200) {
+      log("-------->>>> ${res.data?.data?.transection}");
+      // userData.value = res.data?.data?.user ?? ProfileUser();
+      // box.write('userId', userData.value.id);
     }
     // return null;
     if (res.code == 200) {
@@ -29,7 +47,6 @@ class ProfileController extends GetxController {
 
   Future getRatingAndReview({String? vendorId}) async {
     var res = await ApiRepo.getRatingAndReview(vendorId!);
-    log("----------=->getRatingAndReview ${res.data["data"]}");
 
     if (res.code == 200) {
       return res.data;
@@ -61,7 +78,9 @@ class ProfileController extends GetxController {
 
   Future<bool> uplodImage(BuildContext context) async {
     String name = selectedFile.value.path.split('/').last.toString();
-    await ApiRepo.uploadImage(selectedFile.value.readAsBytesSync(), name).then(
+    await ApiRepo.uploadImage([
+      FileRequestBody(name: name, file: selectedFile.value.readAsBytesSync())
+    ]).then(
       (value) async {
         if (value.code == 200) {
           log("=====>> ${value.data["data"]["imageUrls"][0]}");
@@ -129,7 +148,22 @@ class ProfileController extends GetxController {
     );
 
     if (res.code == 200) {
+      rating.value = 0.0;
+      reviewController.clear();
       // await getBookedParkings();
+      Get.back();
+    }
+  }
+
+  Future deleteRating(String ratingAndReviewId) async {
+    var res = await ApiRepo.deleteRating(ratingAndReviewId);
+
+    if (res.code == 200) {
+      // rating.value = 0.0;
+      // await getRatingAndReview();
+      // reviewController.clear();
+      // // await getBookedParkings();
+      Get.back();
       Get.back();
     }
   }

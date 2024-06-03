@@ -96,6 +96,7 @@ class Parking {
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final ParkingDetails? parkingDetails;
+  final Vendor? vendor;
 
   Parking({
     this.id,
@@ -114,6 +115,7 @@ class Parking {
     this.createdAt,
     this.updatedAt,
     this.parkingDetails,
+    this.vendor,
   });
 
   factory Parking.fromJson(Map<String, dynamic> json) => Parking(
@@ -142,6 +144,7 @@ class Parking {
         parkingDetails: json["parkingDetails"] == null
             ? null
             : ParkingDetails.fromJson(json["parkingDetails"]),
+        vendor: json["vendor"] == null ? null : Vendor.fromJson(json["vendor"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -154,6 +157,7 @@ class Parking {
         "endTime": endTime?.toIso8601String(),
         "vehicleType": vehicleType,
         "vehicleName": vehicleName,
+        "vendor": vendor,
         "vehicleNumber": vehicleNumber,
         "payment": payment,
         "rating": rating,
@@ -166,6 +170,7 @@ class Parking {
 
 class ParkingDetails {
   final String? id;
+  final String? parkingName;
   final String? latitude;
   final String? longitude;
   final List<String>? parkingImg;
@@ -174,6 +179,7 @@ class ParkingDetails {
   ParkingDetails({
     this.id,
     this.latitude,
+    this.parkingName,
     this.longitude,
     this.parkingImg,
     this.address,
@@ -181,6 +187,7 @@ class ParkingDetails {
 
   factory ParkingDetails.fromJson(Map<String, dynamic> json) => ParkingDetails(
         id: json["_id"]!,
+        parkingName: json["parkingName"]!,
         latitude: json["latitude"],
         longitude: json["longitude"],
         parkingImg: json["parkingImg"] == null
@@ -192,6 +199,7 @@ class ParkingDetails {
 
   Map<String, dynamic> toJson() => {
         "_id": id,
+        "parkingName": parkingName,
         "latitude": latitude,
         "longitude": longitude,
         "parkingImg": parkingImg == null
@@ -230,6 +238,26 @@ class Address {
         "state": state,
         "country": country,
         "zip": zip,
+      };
+}
+
+class Vendor {
+  final String? id;
+  final double? avgRating;
+
+  Vendor({
+    this.id,
+    this.avgRating,
+  });
+
+  factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
+        id: json["_id"],
+        avgRating: json["avgRating"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "avgRating": avgRating,
       };
 }
 

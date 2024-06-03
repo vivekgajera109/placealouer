@@ -73,3 +73,89 @@ Future<void> dialogBuilder(BuildContext context) {
     },
   );
 }
+
+class BlurryDialog extends StatelessWidget {
+  final String title;
+  final String content;
+  final VoidCallback continueCallBack;
+  final String? buttonText;
+
+  const BlurryDialog(this.title, this.content, this.continueCallBack,
+      {super.key, this.buttonText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+        insetPadding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0.0),
+        ),
+        backgroundColor: containerColor,
+        child: Container(
+          width: 300,
+          padding: const EdgeInsets.all(10.0),
+          decoration: BoxDecoration(
+            color: containerColor,
+            border: Border.all(
+              color: containerColor,
+              width: 4.0,
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                title,
+                style:
+                    AppTextStyle.regularBold25.copyWith(color: appBlackColor),
+                textAlign: TextAlign.center,
+              ),
+              height05,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  content,
+                  style: AppTextStyle.normalRegularBold20
+                      .copyWith(color: appBlackColor),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              height15,
+              Row(
+                children: [
+                  Expanded(
+                    child: CommonButton(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      margin: EdgeInsets.zero,
+                      style: AppTextStyle.regularBold15,
+                      height: 35,
+                      width: 0,
+                      title: "Non",
+                      borderColor: appBlackColor,
+                      buttonColor: appBlackColor,
+                      titleColor: appWhiteColor,
+                    ),
+                  ),
+                  width15,
+                  Expanded(
+                    child: CommonButton(
+                      onTap: continueCallBack,
+                      margin: EdgeInsets.zero,
+                      style: AppTextStyle.regularBold15,
+                      height: 35,
+                      width: 0,
+                      title: "Oui",
+                      borderColor: appBlackColor,
+                      buttonColor: appBlackColor,
+                      titleColor: appWhiteColor,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ));
+  }
+}

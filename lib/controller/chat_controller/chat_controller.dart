@@ -1,35 +1,26 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:placealouer/model/get_chat_list_model.dart';
+import 'package:placealouer/utils/network/repo.dart';
 
 class ChatController extends GetxController {
-  RxList<ChatMessModel> chatMess = <ChatMessModel>[
-    ChatMessModel(
-      name: "Divyesh",
-      isSender: false,
-      message: "Hello",
-      time: DateTime.now(),
-    ),
-    ChatMessModel(
-      name: "Léa Dupond",
-      isSender: true,
-      message: "Hello",
-      time: DateTime.now(),
-    ),
-    ChatMessModel(
-      name: "Divyesh",
-      isSender: false,
-      message:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      time: DateTime.now(),
-    ),
-    ChatMessModel(
-      name: "Léa Dupond",
-      isSender: true,
-      message:
-          " It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,",
-      time: DateTime.now(),
-    ),
-  ].obs;
-  RxBool isBook = false.obs;
+  Future<ChatListData?> getChatList({required BuildContext context}) async {
+    var res = await ApiRepo.getChatList<GetChatListModel>(context);
+    return res.data?.data;
+  }
+
+  TextEditingController messageController = TextEditingController();
+  RxList<UserChat> chatList = <UserChat>[].obs;
+  Future<ChatData?> getChat(
+      {required BuildContext context, required String conversationId}) async {
+    var res = await ApiRepo.getChat<GetChatModel>(context, conversationId);
+    if (res.code == 200) {
+      chatList.value = res.data!.data?.chat ?? [];
+      chatList.value = chatList.reversed.toList();
+      chatList.refresh();
+    }
+    return res.data?.data;
+  }
 }
 
 class ChatMessModel {

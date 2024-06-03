@@ -81,7 +81,6 @@ class Parking {
   final bool? isOpen;
   final bool? isdelete;
   final List<ParkingDetail>? parkingDetails;
-  final double? avgrating;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final String? vendorId;
@@ -99,7 +98,6 @@ class Parking {
     this.isOpen,
     this.isdelete,
     this.parkingDetails,
-    this.avgrating,
     this.createdAt,
     this.updatedAt,
     this.vendorId,
@@ -124,7 +122,6 @@ class Parking {
             ? []
             : List<ParkingDetail>.from(
                 json["ParkingDetails"]!.map((x) => ParkingDetail.fromJson(x))),
-        avgrating: json["avgrating"].toDouble(),
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),
@@ -151,7 +148,6 @@ class Parking {
         "ParkingDetails": parkingDetails == null
             ? []
             : List<dynamic>.from(parkingDetails!.map((x) => x.toJson())),
-        "avgrating": avgrating,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "vendorId": vendorId,
@@ -230,6 +226,7 @@ class Vendor {
   final String? email;
   final String? phone;
   final String? profileImg;
+  final num? avgRating;
 
   Vendor({
     this.id,
@@ -238,6 +235,7 @@ class Vendor {
     this.email,
     this.phone,
     this.profileImg,
+    this.avgRating,
   });
 
   factory Vendor.fromJson(Map<String, dynamic> json) => Vendor(
@@ -247,6 +245,7 @@ class Vendor {
         email: json["email"],
         phone: json["phone"],
         profileImg: json["profile_img"],
+        avgRating: json["avgRating"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -256,6 +255,7 @@ class Vendor {
         "email": email,
         "phone": phone,
         "profile_img": profileImg,
+        "avgRating": avgRating,
       };
 }
 

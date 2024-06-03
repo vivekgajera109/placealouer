@@ -126,7 +126,7 @@ class CommonBackgroundAuth extends StatelessWidget {
                       child: SingleChildScrollView(child: child),
                     ),
                     isScial ?? false
-                        ? socialLoginView()
+                        ? socialLoginView(context: context)
                         : childScial ?? const SizedBox(),
                   ],
                 ),

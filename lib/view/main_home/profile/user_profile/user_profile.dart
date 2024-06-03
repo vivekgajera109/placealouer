@@ -1,16 +1,20 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:placealouer/common/background/common_background.dart';
+import 'package:placealouer/common/dialog/common_dialog.dart';
 import 'package:placealouer/common/text_widgets/input_text_field_widget.dart';
 import 'package:placealouer/common/widget/common_%20button.dart';
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
 import 'package:placealouer/controller/profile_controller/profile_controller.dart';
+import 'package:placealouer/main.dart';
 import 'package:placealouer/model/get_parking_model.dart';
+import 'package:placealouer/utils/process_indicator.dart';
 
 class UserProfile extends StatefulWidget {
   final Vendor? vendor;
@@ -48,7 +52,6 @@ class _UserProfileState extends State<UserProfile> {
               child: Text("No data found"),
             );
           } else {
-            log("----------=->getRatingAndReview 12 ${snapshot.data["data"]["review"]}");
             return Column(
               children: [
                 Row(
@@ -74,7 +77,9 @@ class _UserProfileState extends State<UserProfile> {
                         RatingBarIndicator(
                           itemSize: 20,
                           itemCount: 5,
-                          rating: 4,
+                          rating: double.parse(snapshot.data["data"]["rating"]
+                                  ["avgRating"]
+                              .toString()),
                           itemBuilder: (context, index) {
                             return const Icon(
                               Icons.star_sharp,
@@ -129,7 +134,9 @@ class _UserProfileState extends State<UserProfile> {
                         CommonButton(
                           title: "Ajouter",
                           onTap: () {
+                            Circle().show(context);
                             profileController.addRating(widget.vendor!.id!);
+                            Circle().hide(context);
                           },
                           height: 40,
                           width: 150,
@@ -153,32 +160,73 @@ class _UserProfileState extends State<UserProfile> {
                       color: appWhiteColor,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
                           children: [
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: RatingBarIndicator(
-                                itemSize: 25,
-                                itemCount: 5,
-                                rating: 3,
-                                // rating: double.parse(snapshot.data["data"]
-                                //         ["review"][index]["rating"]
-                                //     .toString()),
-                                itemBuilder: (context, index) {
-                                  return const Icon(
-                                    Icons.star_sharp,
-                                    color: Colors.amber,
-                                  );
-                                },
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: RatingBarIndicator(
+                                      itemSize: 25,
+                                      itemCount: 5,
+                                      // rating: 3,
+                                      rating: double.parse(snapshot.data["data"]
+                                              ["review"][index]["rating"]
+                                          .toString()),
+                                      itemBuilder: (context, index) {
+                                        return const Icon(
+                                          Icons.star_sharp,
+                                          color: Colors.amber,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  height05,
+                                  Text(
+                                    snapshot.data["data"]["review"][index]
+                                        ["review"],
+                                    style: AppTextStyle.regularBold20
+                                        .copyWith(color: appBlackColor),
+                                  )
+                                ],
                               ),
                             ),
-                            height05,
-                            Text(
-                              snapshot.data["data"]["review"][index]["review"],
-                              style: AppTextStyle.regularBold20
-                                  .copyWith(color: appBlackColor),
-                            )
+                            // Text(
+                            //     "${snapshot.data["data"][index]["userId"].toString()}"),
+                            snapshot.data["data"]["review"][index]["userId"]
+                                        .toString() ==
+                                    box.read("userId").toString()
+                                ? IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (context) {
+                                          return BlurryDialog(
+                                            "Supprimer l'avis",
+                                            "Êtes-vous sûr de vouloir supprimer l'avis ?",
+                                            () async {
+                                              Circle().show(context);
+                                              log("----->>> ${snapshot.data["data"]["review"][index]["_id"]}");
+                                              // mainHomeController
+                                              //     .bookParkingsCancel(
+                                              //   context: context,
+                                              //   bookedParkingId: data.id!,
+                                              // );
+                                              profileController.deleteRating(
+                                                  snapshot.data["data"]
+                                                      ["review"][index]["_id"]);
+                                              Circle().hide(context);
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                    icon: const Icon(Icons.delete),
+                                  )
+                                : const SizedBox(),
                           ],
                         ),
                       ),

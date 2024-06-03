@@ -63,15 +63,14 @@ class SelectCarController extends GetxController {
       "vehicleName": vehicleNameController.text,
       "vehicleNumber": vehicleNumberController.text,
     };
-    log("-----------===================-> $data");
     var res = await ApiRepo.bookParkings(data, context);
-    log("-----------===================-> ${res.data}");
+    log("-----------===================-> bookParkings${res.data["data"]["_id"]}");
     if (res.code == 200) {
-      var res = await payment(parkingId);
+      await paymentBooked(parkingId, "${res.data["data"]["_id"]}");
       log("-----------===================-> $res");
 
       // globalScaffoldKey.currentState?.showSnackBar(successfulSnackBar(res.data));
-      clearData();
+      // clearData();
       return true;
     } else {
       Circle().hide(context);
@@ -83,8 +82,12 @@ class SelectCarController extends GetxController {
     // return res.data;
   }
 
-  Future payment(String parkingId) async {
-    var data = {"charge": 1, "ParkingId": parkingId};
+  Future paymentBooked(String parkingId, String bookedParkingId) async {
+    var data = {
+      "charge": 1,
+      "ParkingId": parkingId,
+      "bookedParkingId": bookedParkingId
+    };
     var res = await ApiRepo.payment(data);
     log("-----------===================->123 ${res.data["data"]["url"]}");
     if (res.code == 200) {
@@ -93,15 +96,25 @@ class SelectCarController extends GetxController {
           url: res.data["data"]["url"],
         ),
       )?.then(
-        (value) {
+        (value) async {
+          log("-----------===================-> ${value?.queryParameters}");
           if (value.toString().contains('success')) {
 // Get.Get.of
-            Get.off(() => const SuccessfulScreen());
+            await ApiRepo.successPage(
+                    payerID: value?.queryParameters['PayerID'] ?? "",
+                    paymentId: value?.queryParameters['paymentId'] ?? "")
+                .then((value) => Get.off(() => const SuccessfulScreen()));
+            // Get.off(() => const SuccessfulScreen());
           }
 
           if (value.toString().contains('cancel')) {
 // Get.Get.of
+//             await ApiRepo.cancelPage(
+//                     paymentId: value?.queryParameters['paymentId'] ?? "")
+//                 .then((value) =>
+// // Get.Get.of
             Get.off(() => const UnSuccessfulScreen());
+            // );
           }
         },
       );

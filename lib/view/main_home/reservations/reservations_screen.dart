@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:placealouer/common/appbar/common_appbar.dart';
+import 'package:placealouer/common/dialog/common_dialog.dart';
 import 'package:placealouer/common/widget/common_%20button.dart';
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
@@ -10,6 +11,7 @@ import 'package:placealouer/constant/cached_network_image.dart';
 import 'package:placealouer/constant/static_decoration.dart';
 import 'package:placealouer/controller/main_home_controller/main_home_controller.dart';
 import 'package:placealouer/model/get_booked_parking_model.dart';
+import 'package:placealouer/utils/process_indicator.dart';
 import 'package:placealouer/view/main_home/reservations/reservations_details_screen.dart';
 import 'package:placealouer/view/main_home/search_view/annonces/annonces_screen.dart';
 
@@ -121,7 +123,8 @@ class _ReservationsScreenState extends State<ReservationsScreen> {
                                             height05,
                                             RatingBarIndicator(
                                               itemSize: 22,
-                                              rating: data.rating?.toDouble() ??
+                                              rating: data.vendor?.avgRating
+                                                      ?.toDouble() ??
                                                   0.0,
                                               itemBuilder: (context, index) =>
                                                   const Icon(
@@ -197,21 +200,50 @@ class _ReservationsScreenState extends State<ReservationsScreen> {
                                           titleColor: appWhiteColor,
                                         ),
                                       ),
-                                      width15,
-                                      width15,
-                                      Expanded(
-                                        child: CommonButton(
-                                          onTap: () {},
-                                          margin: EdgeInsets.zero,
-                                          style: AppTextStyle.regularBold15,
-                                          height: 35,
-                                          width: 0,
-                                          title: "Supprimer",
-                                          borderColor: appBlackColor,
-                                          buttonColor: appBlackColor,
-                                          titleColor: appWhiteColor,
-                                        ),
-                                      ),
+                                      data.endTime!.isAfter(DateTime.now())
+                                          ? customWidth(30)
+                                          : const SizedBox(),
+                                      data.endTime!.isAfter(DateTime.now())
+                                          ? Expanded(
+                                              child: CommonButton(
+                                                onTap: () {
+                                                  showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return BlurryDialog(
+                                                        "Annuler le stationnement",
+                                                        "Êtes-vous sûr de vouloir annuler le stationnement ?",
+                                                        buttonText:
+                                                            "Delete Account",
+                                                        () async {
+                                                          Circle()
+                                                              .show(context);
+                                                          mainHomeController
+                                                              .bookParkingsCancel(
+                                                            context: context,
+                                                            bookedParkingId:
+                                                                data.id!,
+                                                          );
+                                                          Circle()
+                                                              .hide(context);
+                                                        },
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                                margin: EdgeInsets.zero,
+                                                style:
+                                                    AppTextStyle.regularBold15,
+                                                height: 35,
+                                                width: 0,
+                                                title: "Supprimer",
+                                                borderColor: appBlackColor,
+                                                buttonColor: appBlackColor,
+                                                titleColor: appWhiteColor,
+                                              ),
+                                            )
+                                          : const SizedBox()
                                     ],
                                   )
                                 ],

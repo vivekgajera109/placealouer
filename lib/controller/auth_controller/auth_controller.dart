@@ -64,7 +64,8 @@ class AuthController extends GetxController {
       // CommonMethod().getXSnackBar(
       //     "Success", res.message ?? "Login successfully", greenContainerColor);
       // clear();
-      res.data?.data?.user?.uploadedIdentity == []
+      log("----->> ${res.data?.data?.user?.uploadedIdentity?.isEmpty}");
+      res.data?.data?.user?.uploadedIdentity?.isEmpty == true
           ? Get.offAll(() => const VerifyIdentity())
           : Get.offAll(
               () => const MainHome(),

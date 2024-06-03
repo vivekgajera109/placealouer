@@ -22,7 +22,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
 
   @override
   void initState() {
-    mesAnnoncesController.getParkings(context);
+    mesAnnoncesController.getParkings(context: context, searchValue: "");
     mesAnnoncesController.getCurrentPosition();
 
     super.initState();

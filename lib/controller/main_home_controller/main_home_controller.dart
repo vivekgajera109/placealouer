@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -32,6 +34,26 @@ class MainHomeController extends GetxController {
     if (res.code == 200) {
       bookedParking?.value = res.data!.data!.parking!;
       bookedParking?.refresh();
+    }
+    return res.data?.data;
+    // if (res.code == 200) {
+    //   return true;
+    // } else {
+    //   return false;
+  }
+
+  Future bookParkingsCancel(
+      {required BuildContext context, required String bookedParkingId}) async {
+    log("bookedParkingId=====> $bookedParkingId");
+    var res = await ApiRepo.bookParkingsCancel({
+      "bookedParkingId": bookedParkingId,
+    }, context);
+    if (res.code == 200) {
+      // bookedParking?.value = res.data!.data!.parking!;
+
+      getBookedParkings();
+      bookedParking?.refresh();
+      Get.back();
     }
     return res.data?.data;
     // if (res.code == 200) {

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:placealouer/common/background/common_background.dart';
 import 'package:placealouer/common/text_widgets/input_text_field_widget.dart';
@@ -38,29 +40,42 @@ class _UpdateProfileState extends State<UpdateProfile> {
       child: Column(
         children: [
           // Obx(() {
-          GestureDetector(
-            onTap: () {
-              profileController.pickFile().then((value) => setState(() {}));
-            },
-            child: CircleAvatar(
-              radius: 50,
-              backgroundColor: Colors.transparent,
-              // backgroundImage: widget.userData.profileImg != null
-              //     ? NetworkImage(widget.userData.profileImg!) as ImageProvider
-              //     : MemoryImage(
-              //         profileController.uploadImageUrl ?? Uint8List(0),
-              //         // fit: BoxFit.cover,
-              //       ),
-              backgroundImage: profileController.uploadImageUrl.value.isNotEmpty
-                  ? MemoryImage(
-                      profileController.uploadImageUrl.value,
-                      // fit: BoxFit.cover,
-                    ) as ImageProvider
-                  : widget.userData.profileImg != null
-                      ? NetworkImage(widget.userData.profileImg!)
-                          as ImageProvider
-                      : const AssetImage("assets/png/pdp 1.png"),
-            ),
+          Stack(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  profileController.pickFile().then((value) => setState(() {}));
+                },
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.transparent,
+                  // backgroundImage: widget.userData.profileImg != null
+                  //     ? NetworkImage(widget.userData.profileImg!) as ImageProvider
+                  //     : MemoryImage(
+                  //         profileController.uploadImageUrl ?? Uint8List(0),
+                  //         // fit: BoxFit.cover,
+                  //       ),
+                  backgroundImage:
+                      profileController.uploadImageUrl.value.isNotEmpty
+                          ? MemoryImage(
+                              profileController.uploadImageUrl.value,
+                              // fit: BoxFit.cover,
+                            ) as ImageProvider
+                          : widget.userData.profileImg != null
+                              ? NetworkImage(widget.userData.profileImg!)
+                                  as ImageProvider
+                              : const AssetImage("assets/png/pdp 1.png"),
+                ),
+              ),
+              const Positioned(
+                bottom: 0,
+                right: 10,
+                child: Icon(
+                  Icons.add_circle_rounded,
+                  color: buttonColor,
+                ),
+              ),
+            ],
           ),
           // }),
           height15,

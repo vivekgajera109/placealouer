@@ -293,7 +293,7 @@ class _AnnoncesScreenState extends State<AnnoncesScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: FutureBuilder(
-        future: mesAnnoncesController.getParkings(context),
+        future: mesAnnoncesController.getParkings(searchValue: ""),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return buildShimmerLoading();
@@ -319,6 +319,12 @@ class _AnnoncesScreenState extends State<AnnoncesScreen> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
+            onChanged: (value) {
+              // mesAnnoncesController
+              mesAnnoncesController.getParkings(searchValue: value);
+
+              // setState(() {});
+            },
             decoration: InputDecoration(
               prefixIcon: Icon(
                 Icons.search,
@@ -368,116 +374,120 @@ class _AnnoncesScreenState extends State<AnnoncesScreen> {
         ),
         height10,
         Expanded(
-          child: ListView.builder(
-            itemCount: mesAnnoncesController.parking.length,
-            itemBuilder: (context, index) {
-              Parking item = mesAnnoncesController.parking[index];
-              return GestureDetector(
-                onTap: () {
-                  Get.to(
-                    () => AnnoncesDetailScreen(
-                      parkingId: item.id.toString(),
-                    ),
-                  );
-                },
-                child: Card(
-                  elevation: 3,
-                  margin: const EdgeInsets.all(15),
-                  color: containerColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: NetworkImageWidget(
-                                  imageUrl: "${item.parkingImg?[0]}",
-                                  height: 80,
-                                  fit: BoxFit.cover,
+          child: Obx(() {
+            return ListView.builder(
+              itemCount: mesAnnoncesController.parking.length,
+              itemBuilder: (context, index) {
+                Parking item = mesAnnoncesController.parking[index];
+                return GestureDetector(
+                  onTap: () {
+                    Get.to(
+                      () => AnnoncesDetailScreen(
+                        parkingId: item.id.toString(),
+                      ),
+                    );
+                  },
+                  child: Card(
+                    elevation: 3,
+                    margin: const EdgeInsets.all(15),
+                    color: containerColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: NetworkImageWidget(
+                                    imageUrl: "${item.parkingImg?[0]}",
+                                    height: 80,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  width10,
-                                  index * 2 == 0
-                                      ? SvgPicture.asset(
-                                          "assets/svg/alarm.svg",
-                                          height: 22,
-                                        )
-                                      : Image.asset(
-                                          "assets/png/code_1.png",
-                                          height: 32,
-                                        ),
-                                  width10,
-                                  index * 2 == 0
-                                      ? SvgPicture.asset(
-                                          "assets/svg/code_1.svg",
-                                          height: 22,
-                                        )
-                                      : SvgPicture.asset(
-                                          "assets/svg/plug.svg",
-                                          height: 22,
-                                        ),
-                                ],
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    width10,
+                                    index * 2 == 0
+                                        ? SvgPicture.asset(
+                                            "assets/svg/alarm.svg",
+                                            height: 22,
+                                          )
+                                        : Image.asset(
+                                            "assets/png/code_1.png",
+                                            height: 32,
+                                          ),
+                                    width10,
+                                    index * 2 == 0
+                                        ? SvgPicture.asset(
+                                            "assets/svg/code_1.svg",
+                                            height: 22,
+                                          )
+                                        : SvgPicture.asset(
+                                            "assets/svg/plug.svg",
+                                            height: 22,
+                                          ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              radius: 30,
-                              backgroundImage: item.vendor?.profileImg == null
-                                  ? const AssetImage("assets/png/pdp 1.png")
-                                      as ImageProvider
-                                  : NetworkImage(item.vendor?.profileImg ?? ""),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            RatingBarIndicator(
-                              itemSize: 20,
-                              itemCount: 5,
-                              rating: item.avgrating?.toDouble() ?? 0.0,
-                              itemBuilder: (context, index) {
-                                return const Icon(
-                                  Icons.star_sharp,
-                                  color: Colors.amber,
-                                );
-                              },
-                            ),
-                            width15,
-                            Text(
-                              "à 1.4 km",
-                              style: AppTextStyle.regularBold20.copyWith(
-                                color: const Color(0xff247892),
+                              CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                radius: 30,
+                                backgroundImage: item.vendor?.profileImg == null
+                                    ? const AssetImage("assets/png/pdp 1.png")
+                                        as ImageProvider
+                                    : NetworkImage(
+                                        item.vendor?.profileImg ?? ""),
                               ),
-                            ),
-                            width10,
-                            CommonButton(
-                              title:
-                                  "${item.parkingDetails?.isEmpty ?? true ? 0 : item.parkingDetails?[0].pricePerHour}€/Jours",
-                              style: AppTextStyle.regularBold15,
-                              height: 25,
-                              buttonColor: appBlackColor,
-                              width: 85,
-                              margin: EdgeInsets.zero,
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              RatingBarIndicator(
+                                itemSize: 20,
+                                itemCount: 5,
+                                rating:
+                                    item.vendor?.avgRating?.toDouble() ?? 0.0,
+                                itemBuilder: (context, index) {
+                                  return const Icon(
+                                    Icons.star_sharp,
+                                    color: Colors.amber,
+                                  );
+                                },
+                              ),
+                              width15,
+                              Text(
+                                "à 1.4 km",
+                                style: AppTextStyle.regularBold20.copyWith(
+                                  color: const Color(0xff247892),
+                                ),
+                              ),
+                              width10,
+                              CommonButton(
+                                title:
+                                    "${item.parkingDetails?.isEmpty ?? true ? 0 : item.parkingDetails?[0].pricePerHour}€/Jours",
+                                style: AppTextStyle.regularBold15,
+                                height: 25,
+                                buttonColor: appBlackColor,
+                                width: 85,
+                                margin: EdgeInsets.zero,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
-          ),
+                );
+              },
+            );
+          }),
         ),
       ],
     );

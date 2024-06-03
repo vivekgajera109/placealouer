@@ -1,7 +1,7 @@
+import 'dart:developer';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -60,127 +60,152 @@ class MesAnnoncesController extends GetxController {
         .asUint8List();
   }
 
-  Future<GetParkingModel?> getParkings(BuildContext context) async {
+  TextEditingController searchController = TextEditingController();
+  Future<GetParkingModel?> getParkings(
+      {BuildContext? context, required String searchValue}) async {
     final Uint8List markerIcon =
         await getBytesFromAsset('assets/png/Map pin.png');
 
 // final Uint8List markerIcon =
 //         await File("aassets/png/Map pin.png").readAsBytes();
 
-    var res =
-        await ApiRepo.getParkings<GetParkingModel>({"page": 1, "limit": 10});
+    var res = await ApiRepo.getParkings<GetParkingModel>({
+      "page": 1,
+      "limit": 100,
+      "search": searchValue,
+    });
     parking.value = res.data?.data?.parking?.obs ?? [];
-    markers.addAll(parking.map(
-      (e) {
-        return Marker(
-          icon: BitmapDescriptor.fromBytes(markerIcon),
-          markerId: MarkerId(e.id ?? "marker_1"),
-          onTap: () {
-            modalBottomSheetMenu(context, e);
-          },
-          position: LatLng(
-              double.parse(e.latitude ?? ""), double.parse(e.longitude ?? "")),
-          infoWindow: InfoWindow(title: e.parkingName ?? "marker_1"),
-        );
-      },
-    ).toSet());
+    log("message : ${parking[0].vendor?.avgRating}");
+    parking.refresh();
+    update();
+    // parking.value.
+    context == null
+        ? null
+        : markers.addAll(parking.map(
+            (e) {
+              return Marker(
+                icon: BitmapDescriptor.fromBytes(markerIcon),
+                markerId: MarkerId(e.id ?? "marker_1"),
+                onTap: () {
+                  modalBottomSheetMenu(context, e);
+                },
+                position: LatLng(double.parse(e.latitude ?? ""),
+                    double.parse(e.longitude ?? "")),
+                infoWindow: InfoWindow(title: e.parkingName ?? "marker_1"),
+              );
+            },
+          ).toSet());
     markers.refresh();
     return res.data;
   }
 
+  Future getConversationId(BuildContext context, String receiverId) async {
+    var res = await ApiRepo.getConversationId(receiverId, context);
+    log("message : ${res.data}");
+    return res.data;
+  }
+
   void modalBottomSheetMenu(BuildContext context, Parking parking) {
-    showModalBottomSheet(
-      context: context,
-      builder: (builder) {
-        return Container(
-          height: 250.0,
-          color: Colors.transparent, //could change this to Color(0xFF737373),
-          //so you don't have to change MaterialApp canvasColor
-          child: Container(
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    topRight: Radius.circular(10.0))),
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              children: [
-                Container(
-                  height: 5,
-                  width: 50,
-                  margin: const EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(10),
+    log("message : ${parking.id} ==>");
+    try {
+      showModalBottomSheet(
+        context: context,
+        builder: (builder) {
+          return Container(
+            // height: 250.0,
+            color: Colors.transparent, //could change this to Color(0xFF737373),
+            //so you don't have to change MaterialApp canvasColor
+            child: Container(
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0))),
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    height: 5,
+                    width: 50,
+                    margin: const EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                ),
-                Text(
-                  parking.parkingName?.toUpperCase() ?? "",
-                  style:
-                      AppTextStyle.regularBold20.copyWith(color: appBlackColor),
-                ),
-                height10,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Adresse:- ",
-                      style: AppTextStyle.regularBold15
-                          .copyWith(color: appBlackColor),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "${parking.address?.address}, ${parking.address?.city}, ${parking.address?.state}, ${parking.address?.zip}",
-                        style: AppTextStyle.normalRegularBold15
+                  Text(
+                    parking.parkingName?.toUpperCase() ?? "",
+                    style: AppTextStyle.regularBold20
+                        .copyWith(color: appBlackColor),
+                  ),
+                  height10,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Adresse:- ",
+                        style: AppTextStyle.regularBold15
                             .copyWith(color: appBlackColor),
                       ),
-                    ),
-                  ],
-                ),
-                height10,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Durée:-      ",
-                      style: AppTextStyle.regularBold15
-                          .copyWith(color: appBlackColor),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "à 1.4 km",
-                        style: AppTextStyle.normalRegularBold15
+                      Expanded(
+                        child: Text(
+                          "${parking.address?.address}, ${parking.address?.city}, ${parking.address?.state}, ${parking.address?.zip}",
+                          style: AppTextStyle.normalRegularBold15
+                              .copyWith(color: appBlackColor),
+                        ),
+                      ),
+                    ],
+                  ),
+                  height10,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Durée:-      ",
+                        style: AppTextStyle.regularBold15
                             .copyWith(color: appBlackColor),
                       ),
-                    ),
-                  ],
-                ),
-                height10,
-                height10,
-                CommonButton(
-                  onTap: () {
-                    Get.back();
-                    Get.to(
-                      () => AnnoncesDetailScreen(
-                        parkingId: parking.id.toString(),
+                      Expanded(
+                        child: Text(
+                          "à 1.4 km",
+                          style: AppTextStyle.normalRegularBold15
+                              .copyWith(color: appBlackColor),
+                        ),
                       ),
-                    );
-                  },
-                  title: "VOIR PLUS",
-                  buttonColor: buttonColor,
-                  borderColor: buttonColor,
-                  titleColor: appWhiteColor,
-                  height: 35,
-                  margin: const EdgeInsets.only(bottom: 20),
-                ),
-              ],
+                    ],
+                  ),
+                  height10,
+                  height10,
+                  CommonButton(
+                    onTap: () {
+                      Get.back();
+                      Get.to(
+                        () => AnnoncesDetailScreen(
+                          parkingId: parking.id.toString(),
+                        ),
+                      );
+                    },
+                    title: "VOIR PLUS",
+                    buttonColor: buttonColor,
+                    borderColor: buttonColor,
+                    titleColor: appWhiteColor,
+                    height: 35,
+                    margin: const EdgeInsets.only(bottom: 20),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
-    );
+          );
+        },
+      );
+    } catch (e, st) {
+      log("----=-=-=--> $e");
+      log("----=-=-=--> $st");
+      rethrow;
+    }
   }
 
   RxInt imageIndex = 0.obs;
