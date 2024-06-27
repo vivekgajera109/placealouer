@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>944407828660-2n1d4qiiksocgpimhmh1om5ha9vldel0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.944407828660-2n1d4qiiksocgpimhmh1om5ha9vldel0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>944407828660-m1n2m4palgq4rfrmqkq37ih6t94uvuro.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC2ajTdHMm850aWZJoraTGZeu3lHAZAzo4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>944407828660</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.placealoue.com</string>
+	<key>PROJECT_ID</key>
+	<string>placealouer-f132e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>placealouer-f132e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:944407828660:ios:39bcebe94b09a1f2349fe1</string>
+</dict>
+</plist>

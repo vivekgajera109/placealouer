@@ -20,24 +20,27 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Permission.location.request().then(
-          (value) => Permission.location.isGranted.then(
-            (value) {
-              if (value) {
-                Timer(
-                  const Duration(seconds: 5),
-                  () {
-                    log("---->> ${box.read("token")}");
-                    box.read("token") == null
-                        // ? Get.offAll(() => const InscriptionScreeen())
-                        ? Get.offAll(() => const OnboardingScreen())
-                        : Get.offAll(() => const MainHome());
-                  },
-                );
-              }
-              log("-------------> Permission $value");
-            },
-          ),
+      (value) {
+        log("message permission ->$value");
+        return Permission.location.isGranted.then(
+          (value) {
+            if (value) {
+              Timer(
+                const Duration(seconds: 5),
+                () {
+                  log("---->> ${box.read("token")}");
+                  box.read("token") == null
+                      // ? Get.offAll(() => const InscriptionScreeen())
+                      ? Get.offAll(() => const OnboardingScreen())
+                      : Get.offAll(() => const MainHome());
+                },
+              );
+            }
+            log("-------------> Permission $value");
+          },
         );
+      },
+    );
   }
 
   @override

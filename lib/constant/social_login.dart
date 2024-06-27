@@ -31,4 +31,3 @@ Future<void> signup(BuildContext context) async {
   } // if result not null we simply call the MaterialpageRoute,
   // for go to the HomePage screen
 }
-// }

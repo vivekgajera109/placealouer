@@ -8,7 +8,7 @@ import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/static_decoration.dart';
 import 'package:placealouer/controller/select_car_controller/select_car_controller.dart';
-import 'package:placealouer/utils/process_indicator.dart';
+import 'package:placealouer/view/payment_screen.dart';
 
 class BookScreen extends StatefulWidget {
   final dynamic parkingDetails;
@@ -336,22 +336,6 @@ class _BookScreenState extends State<BookScreen> {
                               ),
                             ],
                           ),
-                          // height10,
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //   children: [
-                          //     Text(
-                          //       "Frais de service (10%)",
-                          //       style: AppTextStyle.normalSemiBold15
-                          //           .copyWith(color: appBlackColor),
-                          //     ),
-                          //     Text(
-                          //       "1,50€",
-                          //       style: AppTextStyle.normalSemiBold15
-                          //           .copyWith(color: appBlackColor),
-                          //     ),
-                          //   ],
-                          // ),
                         ],
                       )
                     : const SizedBox()),
@@ -360,21 +344,28 @@ class _BookScreenState extends State<BookScreen> {
                 Center(
                     child: CommonButton(
                   margin: EdgeInsets.zero,
-                  onTap: () async {
-                    Circle().show(context);
-                    await selectCarController
-                        .bookParkings(widget.parkingId ?? "",
-                            widget.parkingDetails["vehicleType"], context)
-                        .then((value) {
-                      Circle().hide(context);
-                      // return {
-                      //   if (value)
-                      //     {
-                      //       Get.offAll(() => const MainHome()),
-                      //     }
-                      // };
-                    }).then((value) => Circle().hide(context));
-                    Circle().hide(context);
+                  onTap: () {
+                    Get.to(() => PaymentScreen(
+                          totalPrice:
+                              ((selectCarController.dateRange.value * 24) -
+                                  (selectCarController.firstHour.value) -
+                                  (24 - selectCarController.lastHour.value) *
+                                      widget.parkingDetails["pricePerHour"]),
+                          parkingId: widget.parkingId ?? "",
+                          vehicleType: widget.parkingDetails["vehicleType"],
+                        ));
+                    // Circle().show(context);
+                    // await selectCarController
+                    //     .bookParkings(widget.parkingId ?? "",
+                    //         widget.parkingDetails["vehicleType"], context)
+                    //     .then((value) {
+                    //   Get.to(() => PaymentScreen(
+                    //         parkingId: widget.parkingId ?? "",
+                    //         vehicleType: widget.parkingDetails["vehicleType"],
+                    //       ));
+                    //   Circle().hide(context);
+                    // }).then((value) => Circle().hide(context));
+                    // Circle().hide(context);
                     // chatController.isBook.value = true;
                     // Get.back();
                   },

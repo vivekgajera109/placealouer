@@ -64,10 +64,9 @@ class SelectCarController extends GetxController {
       "vehicleNumber": vehicleNumberController.text,
     };
     var res = await ApiRepo.bookParkings(data, context);
-    log("-----------===================-> bookParkings${res.data["data"]["_id"]}");
+
     if (res.code == 200) {
       await paymentBooked(parkingId, "${res.data["data"]["_id"]}");
-      log("-----------===================-> $res");
 
       // globalScaffoldKey.currentState?.showSnackBar(successfulSnackBar(res.data));
       // clearData();
@@ -89,7 +88,6 @@ class SelectCarController extends GetxController {
       "bookedParkingId": bookedParkingId
     };
     var res = await ApiRepo.payment(data);
-    log("-----------===================->123 ${res.data["data"]["url"]}");
     if (res.code == 200) {
       Get.to<Uri>(
         () => PayPalWebView(
@@ -97,9 +95,7 @@ class SelectCarController extends GetxController {
         ),
       )?.then(
         (value) async {
-          log("-----------===================-> ${value?.queryParameters}");
           if (value.toString().contains('success')) {
-// Get.Get.of
             await ApiRepo.successPage(
                     payerID: value?.queryParameters['PayerID'] ?? "",
                     paymentId: value?.queryParameters['paymentId'] ?? "")
@@ -108,11 +104,6 @@ class SelectCarController extends GetxController {
           }
 
           if (value.toString().contains('cancel')) {
-// Get.Get.of
-//             await ApiRepo.cancelPage(
-//                     paymentId: value?.queryParameters['paymentId'] ?? "")
-//                 .then((value) =>
-// // Get.Get.of
             Get.off(() => const UnSuccessfulScreen());
             // );
           }
