@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:placealouer/common/widget/common_%20button.dart';
 import 'package:placealouer/constant/app_colors.dart';
 import 'package:placealouer/constant/app_style.dart';
 import 'package:placealouer/constant/social_login.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../../constant/static_decoration.dart';
 
@@ -38,8 +36,13 @@ socialLoginView({required BuildContext context}) {
       Row(
         children: [
           width15,
-          const Expanded(
-            child: CommonIconButton(iconUrl: "assets/svg/facebook_ic.svg"),
+          Expanded(
+            child: CommonIconButton(
+              iconUrl: "assets/svg/facebook_ic.svg",
+              onTap: () {
+                facebbookSignin();
+              },
+            ),
           ),
           width15,
           Expanded(
@@ -56,15 +59,8 @@ socialLoginView({required BuildContext context}) {
                   child: CommonIconButton(
                     iconUrl: "assets/svg/apple_ic.svg",
                     onTap: () async {
-                      final credential =
-                          await SignInWithApple.getAppleIDCredential(
-                        scopes: [
-                          AppleIDAuthorizationScopes.email,
-                          AppleIDAuthorizationScopes.fullName,
-                        ],
-                      );
-
-                      print(credential);
+                      appleLogin(context);
+                      // print(credential);
                     },
                   ),
                 )

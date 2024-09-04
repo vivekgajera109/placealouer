@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:944407828660:android:28455216544121a7349fe1",
+        "mobilesdk_app_id": "1:944407828660:android:ce1210f61e088884349fe1",
         "android_client_info": {
           "package_name": "com.example.placealouer"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "944407828660-m1n2m4palgq4rfrmqkq37ih6t94uvuro.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.placealouer",
+            "certificate_hash": "3f01989b899961939e3cc451a032e0ca79739e0e"
+          }
+        },
         {
           "client_id": "944407828660-0ddbinb5sm240c634f2d35t1s6crtsa7.apps.googleusercontent.com",
           "client_type": 3
@@ -29,6 +37,57 @@
             {
               "client_id": "944407828660-0ddbinb5sm240c634f2d35t1s6crtsa7.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "944407828660-2n1d4qiiksocgpimhmh1om5ha9vldel0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.placealoue.com"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944407828660:android:137b438a73ad9ee5349fe1",
+        "android_client_info": {
+          "package_name": "com.nexgen.myads"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944407828660-7vqs2boghr9k20q1mslrr3na46jgjjvm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nexgen.myads",
+            "certificate_hash": "3f01989b899961939e3cc451a032e0ca79739e0e"
+          }
+        },
+        {
+          "client_id": "944407828660-0ddbinb5sm240c634f2d35t1s6crtsa7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAe2cvjYTUGne-HEKBWUrQ0cwkVuVZdr_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944407828660-0ddbinb5sm240c634f2d35t1s6crtsa7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "944407828660-2n1d4qiiksocgpimhmh1om5ha9vldel0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.placealoue.com"
+              }
             }
           ]
         }
